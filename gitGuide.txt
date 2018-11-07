@@ -1,0 +1,13 @@
+
+
+Node package manager tutorial:
+
+Open Git Bash
+Type:
+
+git clone https://github.com/viksj950/TNM040.git (1)
+
+cd TNM040 (2)
+
+Finito!
+
