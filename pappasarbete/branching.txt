@@ -1,6 +1,0 @@
-master branch = senaste stabila versionen, 
-		den "officiella", spelbara
-
-dev branch = det som fortfarande håller på att skapas,
-		här lägger vi upp allt nytt, kanske inte
-		100% stabil än
