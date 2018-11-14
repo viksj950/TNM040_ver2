@@ -40,7 +40,7 @@ export default class playState extends Phaser.State {
   }
 
   addObstacle() {
-    this.obstacles.create(this.game.width - 40, this.game.height - 16, 'win');
+    this.obstacles.create(this.game.width - 40, this.game.height - 16, 'obstacle');
 
     // TODO DEThär måste väl va supersämst
     this.game.physics.enable(this.obstacles, Phaser.Physics.ARCADE);
