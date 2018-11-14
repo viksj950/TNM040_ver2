@@ -12,6 +12,6 @@ export default class menuState extends Phaser.State {
   }
 
   start() {
-    this.game.state.start('slay');
+    this.game.state.start('play');
   }
 }
