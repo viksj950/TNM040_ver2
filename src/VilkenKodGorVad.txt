@@ -1,0 +1,7 @@
+Gubbe.js - styr gubben.
+MoveObjects.js - förflyttar alla saker utom gubben.
+Life.js - hanterar gubbens liv, anropar GameOver om noll.
+GameOver.js - om spelaren förlorar.
+CharCust.js - välja gubbe o ändra utseende.
+Tutorial.js - visar tutorialen.
+BuffsAndDebuffs.js - bra/dåliga effekter på gubben.
