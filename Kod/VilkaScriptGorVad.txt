@@ -18,5 +18,7 @@ Tutorial.js - visar tutorialen.
 
 CharacterSelect.js - när man väljer och customizar gubben.
 
-RollBackground.js - får allt förutom gubben att röra på
+MoveItems.js - får allt förutom gubben att röra på
 			sig?
+
+Canvas.js - ritar upp allt.
