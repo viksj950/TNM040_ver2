@@ -1,13 +1,13 @@
 export default class menuState extends Phaser.State {
   create() {
-    const nameLabel = this.game.add.text(80, 80, 'Stupid game',
+    const nameLabel = this.game.add.text(80, 80, 'yo momma so fat this screen is black',
         {font: '50px Arial', fill: '#ffffff'});
 
     const startLabel = this.game.add.text(80, this.game.world.height-80,
-        'press "w" to start',
+        'press "space" to start',
         {font: '25px Arial', fill: '#ffffff'});
     
-    const wkey = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
+    const wkey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     wkey.onDown.addOnce(this.start, this);
   }
 

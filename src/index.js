@@ -14,8 +14,8 @@ import playState from './play';
 
 
 const config = {
-  width: 800,
-  heigth: 600,
+  width: 1280,
+  heigth: 720,
   render: Phaser.AUTO,
   antialiasing: true,
 }
