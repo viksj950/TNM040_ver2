@@ -1,0 +1,14 @@
+[Git Bash]
+To push and commit:
+
+git fetch
+
+git pull
+
+git gui:
+
+-stage changed
+--commit (Local)
+---push (Online)
+
+:)
