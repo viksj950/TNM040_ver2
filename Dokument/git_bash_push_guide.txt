@@ -10,3 +10,5 @@ git gui:
 -stage changed
 --commit (Local)
 ---push (Online)
+
+:)
