@@ -5,7 +5,7 @@ export default class playState extends Phaser.State {
     this.player = this.game.add.sprite(20, this.game.height/2, 'player');
     this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
     this.player.body.bounce.y = 0;
-    this.player.body.gravity.y = 800;
+    this.player.body.gravity.y = 1100;
     this.player.body.collideWorldBounds = true;
     
     this.obstacles = this.game.add.group();
