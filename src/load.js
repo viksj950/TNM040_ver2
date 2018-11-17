@@ -7,6 +7,7 @@ export default class loadState extends Phaser.State {
     this.game.load.image('obstacle', './assets/images/boll.png');
 	this.game.load.image('startButton','./assets/images/startbuttonup.png');
 	this.game.load.audio('startljud','./assets/sound/startknapptryckning.wav');
+	this.game.load.audio('hurtljud','./assets/sound/hurt.wav');
   }
 
   create() {

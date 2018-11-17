@@ -48,8 +48,12 @@ export default class playState extends Phaser.State {
       item.body.velocity.x = -100;
     });
   }
+  
+
 
   gameOver() {
+	    var ajsomfan=this.add.audio('hurtljud');
+	  ajsomfan.play();
     this.game.state.start('win'); //hehe
   }
 
