@@ -5,7 +5,7 @@ export default class loadState extends Phaser.State {
 
     this.game.load.image('player', './assets/images/epple.png');
     this.game.load.image('obstacle', './assets/images/boll.png');
-	this.game.load.image('backgroundimage','./assets/images/phaser.png');
+	this.game.load.image('startButton','./assets/images/phaser.png');
   }
 
   create() {
