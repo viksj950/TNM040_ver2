@@ -6,7 +6,8 @@ export default class menuState extends Phaser.State {
         {font: '50px Arial', fill: '#fcbfff'});
 		
 
-  	var button=this.add.button(this.world.center, this.world.center, 'startButton', function(){this.game.state.start('play')});
+  	var button=this.add.button(this.world.center, this.world.center, 'startButton', function(){this.game.state.start('play'); button.sfx.play();});
+	button.sfx=this.add.audio('startljud');
 
     const startLabel = this.game.add.text(80, this.game.world.height-80,
 
