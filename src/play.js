@@ -26,7 +26,12 @@ export default class playState extends Phaser.State {
 
     // this.obstacles.x -= 5; //nu finns de kanske kvar nog utanförlhmm adklfjaln¨
     
-    if (this.keyboard.isDown(Phaser.Keyboard.SPACEBAR)
+    if (this.keyboard.isDown(Phaser.Keyboard.W)
+        && this.player.position.y >= 580) { //kinda hack hehehe
+
+      this.player.body.velocity.y = -500;
+    }
+    else if (this.keyboard.isDown(Phaser.Keyboard.UP)
         && this.player.position.y >= 580) { //kinda hack hehehe
 
       this.player.body.velocity.y = -500;
@@ -40,21 +45,23 @@ export default class playState extends Phaser.State {
   }
 
   addObstacle() {
-    this.obstacles.create(this.game.width - 40, this.game.height - 16, 'obstacle');
+    let obstaclePosition = [16,48,100];
+
+    this.obstacles.create(this.game.width + 50, this.game.height - obstaclePosition[Math.floor(Math.random()*(4-1)+1)-1], 'obstacle'); //this.game.height - önskad höjd på hindret
 
     // TODO DEThär måste väl va supersämst
     this.game.physics.enable(this.obstacles, Phaser.Physics.ARCADE);
     this.obstacles.forEach((item) => {
-      item.body.velocity.x = -100;
+      item.body.velocity.x = -150;
     });
   }
   
 
 
   gameOver() {
-	    var ajsomfan=this.add.audio('hurtljud');
-	  ajsomfan.play();
-    this.game.state.start('win'); //hehe
+    var ajsomfan=this.add.audio('hurtljud');
+    ajsomfan.play();
+    this.game.state.start('gameOver');
   }
 
 }
