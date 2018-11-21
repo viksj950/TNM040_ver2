@@ -14,8 +14,8 @@ import playState from './play';
 import winState from './win';
 
 const config = {
-  width: 1280,
-  heigth: 720,
+  width: 1024,
+  height: 576,
   render: Phaser.AUTO,
   antialiasing: true,
 }
