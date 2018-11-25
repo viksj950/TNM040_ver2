@@ -1,37 +1,60 @@
 export default class Player extends Phaser.Sprite {
   constructor(game) {
-    super(game, 20, 50, 'player');
+    super(game, 20, 50, 'testSprite'); // tappar ner spealren från toppen hehe!!!
     
+    this.health = 3;
+    this.isJumping = true; // kunde nog va false om spelaren spawnar på marken
+
     this.game.physics.enable(this);
     this.body.gravity.y = 1100;
     this.body.allowGravity = true;
     this.body.collideWorldBounds = true;
-    
-    this.health = 3;
 
-    // TODO animations
+    this.body.setSize(50, 80, 50, 50); // mixtrar med hitboxen
+    
+    //animations
+    this.runAnimation = this.animations.add('run');
+    this.animations.play('run', 5, true);
+    // TODO add animations
+
+    this.duck = this.duck.bind(this);
+    this.run = this.run.bind(this);
+    this.jump = this.jump.bind(this);
   }
 
   jump() {
-    this.body.velocity.y = -500;
-    
-    // TODO animation
+    if (!this.isJumping) {
+      this.body.velocity.y = -500;
+      this.isJumping = true;
+      this.body.setSize(50, 80, 50, 50);
+      // this.y -= 50;
+      // this.body.setSize(50, 50, 50, 40);
+    }
   }
 
   damage(amount) {
     console.log(`${amount} damage dealt, health: ${this.health}`);
     
     super.damage(amount);
-    // TODO play sound?
     return this;
   }
 
   duck() {
-    // TODO
+    if (!this.isJumping) {
+      this.body.setSize(50, 50, 50, 80); //hax?
+    }
+  }
+
+  run() {
+    if (this.body.touching.down) {
+      this.isJumping = false;
+      this.animations.play('run', 5, true);
+      this.body.setSize(50, 80, 50, 50);
+    }
   }
 
   kill() {
-    // source from phaser
+    // source from phaser:
     /*this.alive = false;
     this.exists = false;
     this.visible = false;
@@ -56,8 +79,5 @@ export default class Player extends Phaser.Sprite {
 
     return this;
   }
-
-
-
 
 }
