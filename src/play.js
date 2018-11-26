@@ -16,6 +16,7 @@ export default class playState extends Phaser.State {
     this.game.stage.addChild(this.player);
     this.player.events.onKilled.add(this.gameOver, this); 
     
+    // add obstacles all the time
     this.game.time.events.loop(2000, this.addObstacle, this);
     
     // show lives
@@ -40,6 +41,12 @@ export default class playState extends Phaser.State {
 
     this.wKey = this.keyboard.addKey(Phaser.KeyCode.W);
     this.wKey.onHoldCallback = this.player.jump;
+
+    this.pKey = this.keyboard.addKey(Phaser.KeyCode.P);
+    this.pKey.onDown.add(this.togglePause, this);
+
+    this.escKey = this.keyboard.addKey(Phaser.KeyCode.ESC);
+    this.escKey.onDown.add(this.togglePause, this);
 
     // reset keys? prob not
   }
@@ -79,8 +86,6 @@ export default class playState extends Phaser.State {
       item.body.velocity.x = -200;
     });
   }
-  
-
 
   gameOver() {
 	  var ajsomfan=this.add.audio('hurtljud');
@@ -89,6 +94,26 @@ export default class playState extends Phaser.State {
     this.game.stage.removeChild(this.player); // ??
     // this.player.destroy();
     this.game.state.start('gameOver');
+  }
+
+  togglePause() {
+    if (!this.game.paused) {
+      this.game.paused = true;
+
+      // TODO ändra till vettigt gränssnitt
+      this.pauseText = this.game.add.text(
+        150,
+        150,
+        'Game paused',
+        {font: '30px Courier', fill: '#ff0000'}
+      );
+
+    } else {
+      // TODO
+      this.pauseText.destroy();
+
+      this.game.paused = false;
+    }
   }
 
 }
