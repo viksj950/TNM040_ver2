@@ -15,7 +15,7 @@ export default class Player extends Phaser.Sprite {
     //animations
     this.runAnimation = this.animations.add('run');
     this.animations.play('run', 5, true);
-    // TODO add animations
+    // TODO add animations, and sound?
 
     this.duck = this.duck.bind(this);
     this.run = this.run.bind(this);

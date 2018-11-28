@@ -1,8 +1,12 @@
 export default class loadState extends Phaser.State {
   preload() {
-    let loadingLabel = this.game.add.text(80, 150, 'loading...',
-        {font: '30px Courier', fill: '#afdfdd'});
+    this.loadingBar = this.add.sprite(112, 300, 'loadingBar');
+    this.load.setPreloadSprite(this.loadingBar);
 
+    // let loadingLabel = this.game.add.text(80, 150, 'loading...',
+    //     {font: '30px Indie Flower', fill: '#afdfdd'});
+
+    // load assets
     this.game.load.image('player', './assets/images/epple.png');
     this.game.load.image('obstacle', './assets/images/boll.png');
     this.game.load.image('startButton','./assets/images/startbuttonup.png');
@@ -17,6 +21,7 @@ export default class loadState extends Phaser.State {
   }
 
   create() {
+    this.loadingBar.cropEnabled = false;
     this.game.state.start('menu');
   }
 

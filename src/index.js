@@ -34,4 +34,15 @@ class Game extends Phaser.Game {
   }
 }
 
-new Game();
+function startGame() {
+  new Game();
+}
+
+// load webfont, script included in html
+WebFont.load({
+  active: startGame(), // start game when font is loaded
+  google: {
+    families: ['Indie Flower']
+  }
+});
+

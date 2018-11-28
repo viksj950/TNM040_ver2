@@ -4,17 +4,19 @@ export default class playState extends Phaser.State {
   create() {
     this.game.time.advancedTiming = true; // för att kunna visa fps
 
+    this.game.sound.muteOnPause = false;
+
     this.floor = this.game.add.sprite(0, this.game.height - 128, 'floor');
     this.game.physics.enable(this.floor);
     this.floor.body.immovable = true;
-
+ 
     this.obstacles = this.game.add.group();
     this.obstacles.enableBody = true;
     this.addObstacle();
     
-    // create player and add to stage
+    // create player and add
     this.player = new Player(this.game);
-    this.game.stage.addChild(this.player);
+    this.game.add.existing(this.player);
     this.player.events.onKilled.add(this.gameOver, this); 
     
     // add obstacles all the time
@@ -25,6 +27,19 @@ export default class playState extends Phaser.State {
     for (let i = 0; i < this.player.health; i++) {
       this.lifeDisp.create(32 + (30 * i), 32, 'player');
     }
+
+    // add pause button
+    // TODO 
+    this.pauseButton = this.game.add.button(
+      0, // ändra nog
+      0,
+      'obstacle', // !!
+      this.togglePause,
+      this // här kan man fylla i frames för hover osv sen
+    ); // alignTo()
+    // this.pauseButton.anchor.set(0.5);
+    this.pauseButton.alignIn(this.camera.view, Phaser.TOP_RIGHT, -32, -32);
+    
     
     // keyboard stuff, blir det skumt när man kan använda fler olika för samma?
     this.keyboard = this.game.input.keyboard;
@@ -99,8 +114,6 @@ export default class playState extends Phaser.State {
 	  var ajsomfan=this.add.audio('hurtljud');
     ajsomfan.play();
     
-    this.game.stage.removeChild(this.player); // ??
-    // this.player.destroy();
     this.game.state.start('gameOver');
   }
 
@@ -108,18 +121,47 @@ export default class playState extends Phaser.State {
     if (!this.game.paused) {
       this.game.paused = true;
 
-      // TODO ändra till vettigt gränssnitt
-      this.pauseText = this.game.add.text(
-        150,
-        150,
-        'Game paused',
-        {font: '30px Courier', fill: '#ff0000'}
+      // create dark overlay
+      this.overlay = this.game.add.graphics(0,0);
+      this.overlay.beginFill(0x000000);
+      this.overlay.alpha = 0.7;
+      this.overlay.drawRect(0, 0, this.game.width, this.game.height);
+      this.overlay.endFill();
+
+      this.pauseMenu = this.game.add.group();
+
+      const btnTextStyle = {font: '50px Indie Flower', fill: '#ffffff'};
+
+      // make resume button
+      let resumeButton = new Phaser.Button(this.game, 0, 0, 'player', this.togglePause, this); // byt texture
+      resumeButton.addChild(new Phaser.Text(this.game, 0, 0, 'rEsuMe', btnTextStyle));
+      resumeButton.alignIn(this.camera.bounds, Phaser.CENTER);
+      
+      // make mute button
+      let muteButton = new Phaser.Button(this.game, 0, 0, 'player', () => { // TODO visa om på eller av
+        this.game.sound.mute = !this.game.sound.mute;
+        console.log('mute: ', this.game.sound.mute);
+      }, this);
+      muteButton.addChild(new Phaser.Text(this.game, 0, 0, 'mUtE', btnTextStyle));
+      muteButton.alignIn(this.camera.bounds, Phaser.CENTER, 0, 100);
+      
+      // make pause text
+      let pauseText = this.game.add.text(
+        0,
+        0,
+        'Game Paused',
+        {font: '70px Indie Flower', fill: '#ffff00'}
       );
+      pauseText.alignIn(this.camera.bounds, Phaser.CENTER, 0, -100);
+      
+      //add buttons and stuff to pausemenu group
+      this.pauseMenu.add(pauseText);
+      this.pauseMenu.add(resumeButton);
+      this.pauseMenu.add(muteButton);
 
     } else {
-      // TODO
-      this.pauseText.destroy();
-
+      this.pauseMenu.destroy();
+      this.overlay.destroy();
       this.game.paused = false;
     }
   }
