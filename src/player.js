@@ -2,7 +2,7 @@ export default class Player extends Phaser.Sprite {
   constructor(game) {
     super(game, 20, 50, 'testSprite'); // tappar ner spealren från toppen hehe!!!
     
-    this.health = 3;
+    this.health = this.maxHealth = 3;
     this.isJumping = true; // kunde nog va false om spelaren spawnar på marken
 
     this.game.physics.enable(this);
@@ -32,9 +32,7 @@ export default class Player extends Phaser.Sprite {
     }
   }
 
-  damage(amount) {
-    console.log(`${amount} damage dealt, health: ${this.health}`);
-    
+  damage(amount) {    
     super.damage(amount);
     return this;
   }
