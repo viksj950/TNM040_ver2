@@ -114,11 +114,12 @@ export default class playState extends Phaser.State {
 	  var ajsomfan=this.add.audio('hurtljud');
     ajsomfan.play();
     
-    // wait a little and then go to gameOver
-    let timer = this.game.time.create(true);
-    timer.add(1200,() => {this.game.state.start('gameOver')}, this);
-    timer.start();
-    // this.game.state.start('gameOver');
+    // timergrejen måste förhindra hopp och grejor
+    // // wait a little and then go to gameOver
+    // let timer = this.game.time.create(true);
+    // timer.add(1200,() => {this.game.state.start('gameOver')}, this);
+    // timer.start();
+    this.game.state.start('gameOver');
   }
 
   togglePause() {

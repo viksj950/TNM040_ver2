@@ -13,7 +13,7 @@ export default class Player extends Phaser.Sprite {
     this.body.setSize(50, 180, 75, 10); // mixtrar med hitboxen
     
     //animations
-    this.animations.add('run', ['walk1.png', 'walk2.png', 'walk3.png'], 5, true);
+    this.animations.add('run', ['walk1.png', 'walk2.png', 'walk3.png', 'walk2.png'], 5, true);
     this.animations.add('jump', ['jump.png'], 5, true);
     this.animations.add('duck', ['duck.png'], 5, true);
     let damageAnim = this.animations.add('damage' , ['damage.png'], 2, false);

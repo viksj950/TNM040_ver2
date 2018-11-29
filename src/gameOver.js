@@ -3,8 +3,8 @@ export default class gameOverState extends Phaser.State {
     const nameLabel = this.game.add.text(
       80,
       80,
-      'GAME OVER',
-      {font: '50px Arial', fill: '#00ff00'}
+      'Game over',
+      {font: '50px Indie Flower', fill: '#00ff00'}
     );
 
     const startLabel = this.game.add.text(
