@@ -90,7 +90,7 @@ export default class playState extends Phaser.State {
 
   //debug stuff
   render() {
-    this.game.debug.body(this.player);
+    // this.game.debug.body(this.player);
     // this.game.debug.bodyInfo(this.player, 32, 32);
     // this.game.debug.text(`totalElapsedSeconds : ${this.game.time.totalElapsedSeconds().toFixed(5)}`, 32, 32);
     this.game.debug.text(this.game.time.fps, 2, 14, "#00ff00");
@@ -99,7 +99,7 @@ export default class playState extends Phaser.State {
 
   addObstacle() { // tentorna finns nog kvar för evigt offscreen...
     // let obstaclePosition = [16,48,100];
-    const obstaclePosition = [150, 165, 200];
+    const obstaclePosition = [150, 200, 285];
 
     let newObstacle = this.obstacles.create(
       this.game.width + 50,
@@ -114,7 +114,11 @@ export default class playState extends Phaser.State {
 	  var ajsomfan=this.add.audio('hurtljud');
     ajsomfan.play();
     
-    this.game.state.start('gameOver');
+    // wait a little and then go to gameOver
+    let timer = this.game.time.create(true);
+    timer.add(1200,() => {this.game.state.start('gameOver')}, this);
+    timer.start();
+    // this.game.state.start('gameOver');
   }
 
   togglePause() {

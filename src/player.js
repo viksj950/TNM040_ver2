@@ -1,6 +1,6 @@
 export default class Player extends Phaser.Sprite {
   constructor(game) {
-    super(game, 20, 50, 'testSprite'); // tappar ner spealren från toppen hehe!!!
+    super(game, 20, 50, 'william', 'jump.png'); // tappar ner spealren från toppen hehe!!!
     
     this.health = this.maxHealth = 3;
     this.isJumping = true; // kunde nog va false om spelaren spawnar på marken
@@ -10,12 +10,14 @@ export default class Player extends Phaser.Sprite {
     this.body.allowGravity = true;
     this.body.collideWorldBounds = true;
 
-    this.body.setSize(50, 80, 50, 50); // mixtrar med hitboxen
+    this.body.setSize(50, 180, 75, 10); // mixtrar med hitboxen
     
     //animations
-    this.runAnimation = this.animations.add('run');
-    this.animations.play('run', 5, true);
-    // TODO add animations, and sound?
+    this.animations.add('run', ['walk1.png', 'walk2.png', 'walk3.png'], 5, true);
+    this.animations.add('jump', ['jump.png'], 5, true);
+    this.animations.add('duck', ['duck.png'], 5, true);
+    let damageAnim = this.animations.add('damage' , ['damage.png'], 2, false);
+    damageAnim.onComplete.add(() => {this.animations.play('run')}, this); //return to run anim when done
 
     this.duck = this.duck.bind(this);
     this.run = this.run.bind(this);
@@ -26,20 +28,22 @@ export default class Player extends Phaser.Sprite {
     if (!this.isJumping) {
       this.body.velocity.y = -500;
       this.isJumping = true;
-      this.body.setSize(50, 80, 50, 50);
-      // this.y -= 50;
-      // this.body.setSize(50, 50, 50, 40);
+      this.body.setSize(50, 90, 75, 100);
+      this.animations.play('jump');
     }
   }
 
   damage(amount) {    
     super.damage(amount);
+    this.animations.play('damage');
+    
     return this;
   }
 
   duck() {
     if (!this.isJumping) {
-      this.body.setSize(50, 50, 50, 80); //hax?
+      this.body.setSize(55, 95, 75, 95);
+      this.animations.play('duck');
     }
   }
 
@@ -47,7 +51,7 @@ export default class Player extends Phaser.Sprite {
     if (this.body.touching.down) {
       this.isJumping = false;
       this.animations.play('run', 5, true);
-      this.body.setSize(50, 80, 50, 50);
+      this.body.setSize(50, 180, 75, 10);
     }
   }
 
@@ -65,11 +69,12 @@ export default class Player extends Phaser.Sprite {
     return this;*/
 
 
-    // this.alive = false;
+    this.alive = false;
     // this.exists = false;
     // this.visible = false;
 
     console.log('player killed');
+    this.animations.play('damage', 1, true);
 
     if (this.events) {
       this.events.onKilled$dispatch(this);

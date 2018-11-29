@@ -12,8 +12,8 @@ export default class loadState extends Phaser.State {
     this.game.load.image('startButton','./assets/images/startbuttonup.png');
 
     /* testgrejor */
-    this.game.load.atlasJSONHash('testSprite', './assets/images/animation_test/spritesheet.png', './assets/images/animation_test/spritesheet.json');
     this.game.load.image('floor', './assets/images/floor.png');
+    this.game.load.atlasJSONHash('william', './assets/images/william.png', './assets/images/william.json');
     /* ---------- */
 
     this.game.load.audio('startljud','./assets/sound/startknapptryckning.wav');
