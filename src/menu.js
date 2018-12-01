@@ -8,8 +8,11 @@ export default class menuState extends Phaser.State {
   	//var button=this.add.button(this.world.center, this.world.center, 'startButton', function(){this.game.state.start('play'); button.sfx.play();});
     //button.sfx=this.add.audio('startljud');
     
-    let playButton=this.game.add.button(400, 250, 'pen', actionOnClick, this, 'pen_hover.png','pen_normal.png','pen_pressed.png' );
-    //playButton.addchild(new Phaser.Text(this.game, 0, 0, 'Play', btnTextStyle));
+    let playButton=this.game.add.button(350, 250, 'pen', actionOnClick, this, 'pen_hover.png','pen_normal.png','pen_pressed.png' );
+    playButton.addChild(new Phaser.Text(this.game, 0, 0, 'Play', btnTextStyle));
+    let charSelect=this.game.add.button(350, 350, 'pen', actionOnClick, this, 'pen_hover.png','pen_normal.png','pen_pressed.png' );//Byt actionOnClick till rätt funktion
+    charSelect.addChild(new Phaser.Text(this.game, 0, 0, 'Character selection', btnTextStyle));
+
     //playButton.alignIn(this.camera.bounds, Phaser.CENTER);
 	  playButton.sfx=this.add.audio('startljud');
 
