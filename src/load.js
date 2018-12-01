@@ -11,10 +11,10 @@ export default class loadState extends Phaser.State {
     this.game.load.image('obstacle', './assets/images/boll.png');
     this.game.load.image('startButton','./assets/images/startbuttonup.png');
 
-    /* testgrejor */
+    this.game.load.image('gameBackground', './assets/images/gameBackground.png');
     this.game.load.image('floor', './assets/images/floor.png');
     this.game.load.atlasJSONHash('william', './assets/images/william.png', './assets/images/william.json');
-    /* ---------- */
+
 
     this.game.load.atlasJSONHash('pen', './assets/images/pen_sheet.png', './assets/images/pen_sheet.json');
 
