@@ -5,14 +5,22 @@ export default class playState extends Phaser.State {
     this.game.time.advancedTiming = true; // för att kunna visa fps
 
     this.game.sound.muteOnPause = false;
+    
+    // add background
+    this.background = this.game.add.tileSprite(0, 0, this.game.width, this.game.height - 128, 'gameBackground');
+    this.background.autoScroll(-170, 0);
 
-    this.floor = this.game.add.sprite(0, this.game.height - 128, 'floor');
+
+
+    this.floor = this.game.add.tileSprite(0, this.game.height - 128, 1024, 128, 'floor');
+    this.floor.autoScroll(-170, 0);
     this.game.physics.enable(this.floor);
     this.floor.body.immovable = true;
- 
+    
     this.obstacles = this.game.add.group();
     this.obstacles.enableBody = true;
     this.addObstacle();
+
     
     // create player and add
     this.player = new Player(this.game);
