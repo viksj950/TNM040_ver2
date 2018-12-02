@@ -1,9 +1,18 @@
 export default class gameOverState extends Phaser.State {
+  init(score) {
+    this.score = score;
+  }
+
   create() {
+    if (this.score > this.game.highScore) this.game.highScore = this.score;
+
+    this.background = this.game.add.tileSprite(0, 0, this.game.width, this.game.height - 128, 'gameBackground');
+    this.floor = this.game.add.tileSprite(0, this.game.height - 128, 1024, 128, 'floor');
+    
     const nameLabel = this.game.add.text(
       80,
       80,
-      'Game over',
+      `Game over, your score: ${this.score}`,
       {font: '50px Indie Flower', fill: '#00ff00'}
     );
 

@@ -23,6 +23,8 @@ const config = {
 class Game extends Phaser.Game {
   constructor() {
     super(config);
+
+    this.highScore = 0;
     
     this.state.add('boot', bootState);
     this.state.add('load', loadState);
