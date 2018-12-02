@@ -4,60 +4,60 @@
 			"frame": {
 				"x": 1,
 				"y": 1,
-				"w": 250,
-				"h": 250
+				"w": 300,
+				"h": 45
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 250,
-				"h": 250
+				"w": 300,
+				"h": 45
 			},
 			"sourceSize": {
-				"w": 250,
-				"h": 250
+				"w": 300,
+				"h": 45
 			}
 		},
 		"pen_normal.png": {
 			"frame": {
-				"x": 253,
-				"y": 1,
-				"w": 250,
-				"h": 250
+				"x": 1,
+				"y": 48,
+				"w": 300,
+				"h": 45
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 250,
-				"h": 250
+				"w": 300,
+				"h": 45
 			},
 			"sourceSize": {
-				"w": 250,
-				"h": 250
+				"w": 300,
+				"h": 45
 			}
 		},
 		"pen_pressed.png": {
 			"frame": {
 				"x": 1,
-				"y": 253,
-				"w": 250,
-				"h": 250
+				"y": 95,
+				"w": 300,
+				"h": 45
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 250,
-				"h": 250
+				"w": 300,
+				"h": 45
 			},
 			"sourceSize": {
-				"w": 250,
-				"h": 250
+				"w": 300,
+				"h": 45
 			}
 		}
 	},
@@ -67,8 +67,8 @@
 		"image": "spritesheet.png",
 		"format": "RGBA8888",
 		"size": {
-			"w": 504,
-			"h": 504
+			"w": 302,
+			"h": 141
 		},
 		"scale": "1"
 	}
