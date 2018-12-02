@@ -26,8 +26,8 @@ export default class playState extends Phaser.State {
 
     // this.obstacles.x -= 5; //nu finns de kanske kvar nog utanförlhmm adklfjaln¨
     
-    if (this.keyboard.isDown(Phaser.Keyboard.SPACEBAR)
-        && this.player.position.y >= 580) { //kinda hack hehehe
+    if (this.keyboard.isDown(Phaser.Keyboard.SPACEBAR) 
+          && this.player.position.y >= 580) { //kinda hack hehehe //kinda hack hehehe
 
       this.player.body.velocity.y = -500;
     }
