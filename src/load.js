@@ -9,7 +9,8 @@ export default class loadState extends Phaser.State {
     // load assets
     this.game.load.image('player', './assets/images/epple.png');
 
-    this.game.load.image('obstacle', './assets/images/boll.png');
+    this.game.load.image('obstacle', './assets/images/tenta_red.png');
+	this.game.load.image('powerUp', './assets/images/PU1.png');
     this.game.load.image('startButton','./assets/images/startbuttonup.png');
 
     this.game.load.image('gameBackground', './assets/images/gameBackground.png');

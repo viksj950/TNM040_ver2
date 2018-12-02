@@ -20,6 +20,9 @@ export default class playState extends Phaser.State {
     this.obstacles = this.game.add.group();
     this.obstacles.enableBody = true;
     this.addObstacle();
+	
+	this.powerUp = this.game.add.group();
+	this.addPowerUp();
 
     
     // create player and add
@@ -29,6 +32,7 @@ export default class playState extends Phaser.State {
     
     // add obstacles all the time
     this.game.time.events.loop(2000, this.addObstacle, this);
+	this.game.time.events.loop(3000, this.addPowerUp, this);
     
     // show lives
     this.lifeDisp = this.game.add.group();
@@ -94,6 +98,8 @@ export default class playState extends Phaser.State {
       obstacle.destroy();
       this.updateLifeDisp();
     }, null, this);
+	
+	this.game.physics.arcade.overlap(this.player, this.powerUp, this.powerTaken, null, this);
   }
 
   //debug stuff
@@ -116,6 +122,20 @@ export default class playState extends Phaser.State {
     ); //this.game.height - önskad höjd på hindret
 
     newObstacle.body.velocity.x = -200;
+  }
+  
+  addPowerUp() {
+	  this.powerUp.create(this.game.width - 60, this.game.height - 200, 'powerUp');
+	  
+	  this.game.physics.enable(this.powerUp, Phaser.Physics.ARCADE);
+	this.powerUp.forEach((item) => { item.body.velocity.x = -200;
+	console.log("iloop");});
+  }
+  
+  powerTaken(){
+       this.game.add.text(80, 150, 'power!',
+        {font: '30px Courier', fill: '#afdfdd'});
+      console.log("pickup!");
   }
 
   gameOver() {
