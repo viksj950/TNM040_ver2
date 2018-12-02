@@ -1,5 +1,8 @@
 export default class menuState extends Phaser.State {
   create() {
+    this.background = this.game.add.tileSprite(0, 0, this.game.width, this.game.height - 128, 'gameBackground');
+    this.floor = this.game.add.tileSprite(0, this.game.height - 128, 1024, 128, 'floor');
+
     const nameLabel = this.game.add.text(80, 80, 'yo momma so fat this screen is black',
         {font: '50px Arial', fill: '#fcbfff'});
     

@@ -48,6 +48,14 @@ export default class playState extends Phaser.State {
     // this.pauseButton.anchor.set(0.5);
     this.pauseButton.alignIn(this.camera.view, Phaser.TOP_RIGHT, -32, -32);
     
+    // add scorestuff
+    this.score = 0;
+    this.scoreLabel = this.game.add.text(50, 50, 'score:\n' + this.score, {
+      font: '25px Indie Flower', fill: '#000000'
+    });
+    this.scoreLabel.anchor.setTo(0.5, 0.5);
+    this.scoreLabel.alignTo(this.camera.world.bounds, Phaser.TOP_CENTER, 0, -85);
+    this.scoreLabel.align = 'center';
     
     // keyboard stuff, blir det skumt när man kan använda fler olika för samma?
     this.keyboard = this.game.input.keyboard;
@@ -94,6 +102,9 @@ export default class playState extends Phaser.State {
       obstacle.destroy();
       this.updateLifeDisp();
     }, null, this);
+
+    this.incrementScore();
+
   }
 
   //debug stuff
@@ -114,7 +125,7 @@ export default class playState extends Phaser.State {
       this.game.height - obstaclePosition[Math.floor(Math.random()*(4-1)+1)-1],
       'obstacle'
     ); //this.game.height - önskad höjd på hindret
-
+    newObstacle.lifespan = 10000; // TODO se till att detta är ett rimligt värde
     newObstacle.body.velocity.x = -200;
   }
 
@@ -127,7 +138,15 @@ export default class playState extends Phaser.State {
     // let timer = this.game.time.create(true);
     // timer.add(1200,() => {this.game.state.start('gameOver')}, this);
     // timer.start();
-    this.game.state.start('gameOver');
+    this.game.state.start('gameOver', true, false, this.score);
+  }
+
+
+
+  incrementScore() {
+    this.score += 1;
+    this.scoreLabel.text = 'score:\n' + this.score;
+    // TODO
   }
 
   togglePause() {
