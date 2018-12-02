@@ -7,13 +7,9 @@ export default class gameOverState extends Phaser.State {
     if (this.score > this.game.highScore) this.game.highScore = this.score;
 
     this.background = this.game.add.tileSprite(0, 0, this.game.width, this.game.height - 128, 'gameBackground');
+    this.background.alpha = 0.3;
     this.floor = this.game.add.tileSprite(0, this.game.height - 128, 1024, 128, 'floor');
-    // create dark overlay
-    this.overlay = this.game.add.graphics(0,0);
-    this.overlay.beginFill(0x000000);
-    this.overlay.alpha = 0.7;
-    this.overlay.drawRect(0, 0, this.game.width, this.game.height);
-    this.overlay.endFill();
+    this.floor.alpha = 0.3;
 
     const nameLabel = this.game.add.text(
       80,
