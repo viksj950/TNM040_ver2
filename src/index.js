@@ -30,7 +30,7 @@ class Game extends Phaser.Game {
     this.state.add('boot', bootState);
     this.state.add('load', loadState);
     this.state.add('menu', menuState);
-	this.state.add('characterSelect', characterSelectState);
+    this.state.add('characterSelect', characterSelectState);
     this.state.add('play', playState);
     this.state.add('gameOver', gameOverState);
     
