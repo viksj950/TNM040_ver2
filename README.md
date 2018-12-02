@@ -1,3 +1,6 @@
+using [Phaser-Webpack boilerplate project](https://github.com/photonstorm/phaser-ce/tree/master/resources/Project%20Templates/Webpack)
+
+
 # Phaser-Webpack
 
 Simple boilerplate project that combines [Phaser](http://phaser.io) with [Webpack](http://webpack.github.io).

@@ -11,11 +11,11 @@ import bootState from './boot';
 import loadState from './load';
 import menuState from './menu';
 import playState from './play';
-import winState from './win';
+import gameOverState from './gameOver';
 
 const config = {
-  width: 1280,
-  heigth: 720,
+  width: 1024,
+  height: 576,
   render: Phaser.AUTO,
   antialiasing: true,
 }
@@ -28,10 +28,21 @@ class Game extends Phaser.Game {
     this.state.add('load', loadState);
     this.state.add('menu', menuState);
     this.state.add('play', playState);
-    this.state.add('win', winState);
+    this.state.add('gameOver', gameOverState);
     
     this.state.start('boot');
   }
 }
 
-new Game();
+function startGame() {
+  new Game();
+}
+
+// load webfont, script included in html
+WebFont.load({
+  active: startGame(), // start game when font is loaded
+  google: {
+    families: ['Indie Flower']
+  }
+});
+
