@@ -11,6 +11,7 @@ export default class Player extends Phaser.Sprite {
     this.body.collideWorldBounds = true;
 
     this.body.setSize(50, 180, 75, 10); // mixtrar med hitboxen
+	let ajsomfan=this.game.add.audio('hurtljud');
     
     //animations
     this.animations.add('run', ['walk1.png', 'walk2.png', 'walk3.png', 'walk2.png'], 5, true);
@@ -26,14 +27,18 @@ export default class Player extends Phaser.Sprite {
 
   jump() {
     if (!this.isJumping) {
+		let ajsomfan=this.game.add.audio('hoppljud');
       this.body.velocity.y = -500;
       this.isJumping = true;
       this.body.setSize(50, 90, 75, 100);
       this.animations.play('jump');
+    ajsomfan.play();
     }
   }
 
   damage(amount) {    
+  let ajsomfan=this.game.add.audio('hurtljud');
+    ajsomfan.play();
     super.damage(amount);
     this.animations.play('damage');
     
