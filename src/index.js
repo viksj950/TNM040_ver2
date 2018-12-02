@@ -24,11 +24,13 @@ const config = {
 class Game extends Phaser.Game {
   constructor() {
     super(config);
+
+    this.highScore = 0;
     
     this.state.add('boot', bootState);
     this.state.add('load', loadState);
     this.state.add('menu', menuState);
-	this.state.add('characterSelect', characterSelectState);
+    this.state.add('characterSelect', characterSelectState);
     this.state.add('play', playState);
     this.state.add('gameOver', gameOverState);
     

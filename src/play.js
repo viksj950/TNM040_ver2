@@ -52,6 +52,14 @@ export default class playState extends Phaser.State {
     // this.pauseButton.anchor.set(0.5);
     this.pauseButton.alignIn(this.camera.view, Phaser.TOP_RIGHT, -32, -32);
     
+    // add scorestuff
+    this.score = 0;
+    this.scoreLabel = this.game.add.text(50, 50, 'score:\n' + this.score, {
+      font: '25px Indie Flower', fill: '#000000'
+    });
+    this.scoreLabel.anchor.setTo(0.5, 0.5);
+    this.scoreLabel.alignTo(this.camera.world.bounds, Phaser.TOP_CENTER, 0, -85);
+    this.scoreLabel.align = 'center';
     
     // keyboard stuff, blir det skumt när man kan använda fler olika för samma?
     this.keyboard = this.game.input.keyboard;
@@ -98,8 +106,13 @@ export default class playState extends Phaser.State {
       obstacle.destroy();
       this.updateLifeDisp();
     }, null, this);
-	
+
 	this.game.physics.arcade.overlap(this.player, this.powerUp, this.powerTaken, null, this);
+
+    this.incrementScore();
+    this.obstacles.forEach((child) => {child.angle += 0.5;}); // uppdaterar ju inte hitboxen dock
+
+
   }
 
   //debug stuff
@@ -108,10 +121,11 @@ export default class playState extends Phaser.State {
     // this.game.debug.bodyInfo(this.player, 32, 32);
     // this.game.debug.text(`totalElapsedSeconds : ${this.game.time.totalElapsedSeconds().toFixed(5)}`, 32, 32);
     this.game.debug.text(this.game.time.fps, 2, 14, "#00ff00");
+    //this.obstacles.forEachAlive((member) => {this.game.debug.body(member);}, this);
     // this.game.debug.text(this.player.health, 100, 14,"#ffffff");
   }
 
-  addObstacle() { // tentorna finns nog kvar för evigt offscreen...
+  addObstacle() {
     // let obstaclePosition = [16,48,100];
     const obstaclePosition = [150, 200, 285];
 
@@ -120,7 +134,9 @@ export default class playState extends Phaser.State {
       this.game.height - obstaclePosition[Math.floor(Math.random()*(4-1)+1)-1],
       'obstacle'
     ); //this.game.height - önskad höjd på hindret
-
+    newObstacle.body.setSize(24, 24, 0, 4); // verkar funka med 24x32-bild
+    newObstacle.anchor.setTo(0.5, 0.5);
+    newObstacle.lifespan = 10000; // TODO se till att detta är ett rimligt värde
     newObstacle.body.velocity.x = -200;
   }
   
@@ -147,7 +163,15 @@ export default class playState extends Phaser.State {
     // let timer = this.game.time.create(true);
     // timer.add(1200,() => {this.game.state.start('gameOver')}, this);
     // timer.start();
-    this.game.state.start('gameOver');
+    this.game.state.start('gameOver', true, false, this.score);
+  }
+
+
+
+  incrementScore() {
+    this.score += 1;
+    this.scoreLabel.text = 'score:\n' + this.score;
+    // TODO
   }
 
   togglePause() {
@@ -164,18 +188,20 @@ export default class playState extends Phaser.State {
       this.pauseMenu = this.game.add.group();
 
       const btnTextStyle = {font: '50px Indie Flower', fill: '#ffffff'};
+        btnTextStyle.stroke = "#000000";
+        btnTextStyle.strokeThickness = 6;
 
       // make resume button
-      let resumeButton = new Phaser.Button(this.game, 0, 0, 'player', this.togglePause, this); // byt texture
-      resumeButton.addChild(new Phaser.Text(this.game, 0, 0, 'rEsuMe', btnTextStyle));
+      let resumeButton = new Phaser.Button(this.game, 0, 0, 'pen', this.togglePause, this,0,1,2); // byt texture
+      resumeButton.addChild(new Phaser.Text(this.game, 50, -5, 'Resume', btnTextStyle));
       resumeButton.alignIn(this.camera.bounds, Phaser.CENTER);
       
       // make mute button
-      let muteButton = new Phaser.Button(this.game, 0, 0, 'player', () => { // TODO visa om på eller av
+      let muteButton = new Phaser.Button(this.game, 0, 0, 'pen', () => { // TODO visa om på eller av
         this.game.sound.mute = !this.game.sound.mute;
         console.log('mute: ', this.game.sound.mute);
-      }, this);
-      muteButton.addChild(new Phaser.Text(this.game, 0, 0, 'mUtE', btnTextStyle));
+      }, this,0,1,2);
+      muteButton.addChild(new Phaser.Text(this.game, 80, -5, 'Mute', btnTextStyle));
       muteButton.alignIn(this.camera.bounds, Phaser.CENTER, 0, 100);
       
       // make pause text
