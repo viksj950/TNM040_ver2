@@ -104,6 +104,7 @@ export default class playState extends Phaser.State {
     }, null, this);
 
     this.incrementScore();
+    this.obstacles.forEach((child) => {child.angle += 0.5;}); // uppdaterar ju inte hitboxen dock
 
   }
 
@@ -113,10 +114,11 @@ export default class playState extends Phaser.State {
     // this.game.debug.bodyInfo(this.player, 32, 32);
     // this.game.debug.text(`totalElapsedSeconds : ${this.game.time.totalElapsedSeconds().toFixed(5)}`, 32, 32);
     this.game.debug.text(this.game.time.fps, 2, 14, "#00ff00");
+    //this.obstacles.forEachAlive((member) => {this.game.debug.body(member);}, this);
     // this.game.debug.text(this.player.health, 100, 14,"#ffffff");
   }
 
-  addObstacle() { // tentorna finns nog kvar för evigt offscreen...
+  addObstacle() {
     // let obstaclePosition = [16,48,100];
     const obstaclePosition = [150, 200, 285];
 
@@ -125,6 +127,8 @@ export default class playState extends Phaser.State {
       this.game.height - obstaclePosition[Math.floor(Math.random()*(4-1)+1)-1],
       'obstacle'
     ); //this.game.height - önskad höjd på hindret
+    newObstacle.body.setSize(24, 24, 0, 4); // verkar funka med 24x32-bild
+    newObstacle.anchor.setTo(0.5, 0.5);
     newObstacle.lifespan = 10000; // TODO se till att detta är ett rimligt värde
     newObstacle.body.velocity.x = -200;
   }
