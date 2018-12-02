@@ -1,17 +1,20 @@
 export default class characterSelectState extends Phaser.State {
   create() {
-	  this.game.stage.backgroundColor = "#ffffff";
-	  var graphics = this.game.add.graphics(0, 250);
-graphics.beginFill(0xFF3300);
+	this.game.stage.backgroundColor = "#ffffff"; //ändrar bakgrundsfärgen
+	  
+	  //ritar ut två trianglar, inget nödvändigt
+	 var graphics = this.game.add.graphics(0, 250);
+	  
+	  //ritar första triangeln
+	graphics.beginFill(0xFF3300);
     graphics.lineStyle(10, 0xffd900, 1);
-       graphics.moveTo(100,75);
+    graphics.moveTo(100,75);
     graphics.lineTo(200, 50);
     graphics.lineTo(200, 100);
 	graphics.endFill();
 	
+	// ritar andra triangeln
     graphics.beginFill(0xFF3300);
-    
-    // draw a second shape
     graphics.moveTo(900,75)
     graphics.lineTo(800, 50);
     graphics.lineTo(800, 100);
