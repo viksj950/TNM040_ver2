@@ -10,6 +10,7 @@ import Phaser from 'expose-loader?Phaser!phaser-ce/build/custom/phaser-split.js'
 import bootState from './boot';
 import loadState from './load';
 import menuState from './menu';
+import characterSelectState from './characterSelect';
 import playState from './play';
 import gameOverState from './gameOver';
 
@@ -27,6 +28,7 @@ class Game extends Phaser.Game {
     this.state.add('boot', bootState);
     this.state.add('load', loadState);
     this.state.add('menu', menuState);
+	this.state.add('characterSelect', characterSelectState);
     this.state.add('play', playState);
     this.state.add('gameOver', gameOverState);
     
