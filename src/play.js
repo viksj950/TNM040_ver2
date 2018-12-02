@@ -66,15 +66,8 @@ export default class playState extends Phaser.State {
     this.wKey = this.keyboard.addKey(Phaser.KeyCode.W);
     this.wKey.onHoldCallback = this.player.jump;
 
-<<<<<<< HEAD
-    // this.obstacles.x -= 5; //nu finns de kanske kvar nog utanförlhmm adklfjaln¨
-    
-    if (this.keyboard.isDown(Phaser.Keyboard.SPACEBAR) 
-          && this.player.position.y >= 580) { //kinda hack hehehe //kinda hack hehehe
-=======
     this.pKey = this.keyboard.addKey(Phaser.KeyCode.P);
     this.pKey.onDown.add(this.togglePause, this);
->>>>>>> refs/remotes/origin/dev
 
     this.escKey = this.keyboard.addKey(Phaser.KeyCode.ESC);
     this.escKey.onDown.add(this.togglePause, this);
