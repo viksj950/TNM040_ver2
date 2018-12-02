@@ -144,18 +144,20 @@ export default class playState extends Phaser.State {
       this.pauseMenu = this.game.add.group();
 
       const btnTextStyle = {font: '50px Indie Flower', fill: '#ffffff'};
+        btnTextStyle.stroke = "#000000";
+        btnTextStyle.strokeThickness = 6;
 
       // make resume button
-      let resumeButton = new Phaser.Button(this.game, 0, 0, 'player', this.togglePause, this); // byt texture
-      resumeButton.addChild(new Phaser.Text(this.game, 0, 0, 'rEsuMe', btnTextStyle));
+      let resumeButton = new Phaser.Button(this.game, 0, 0, 'pen', this.togglePause, this,0,1,2); // byt texture
+      resumeButton.addChild(new Phaser.Text(this.game, 50, -5, 'Resume', btnTextStyle));
       resumeButton.alignIn(this.camera.bounds, Phaser.CENTER);
       
       // make mute button
-      let muteButton = new Phaser.Button(this.game, 0, 0, 'player', () => { // TODO visa om på eller av
+      let muteButton = new Phaser.Button(this.game, 0, 0, 'pen', () => { // TODO visa om på eller av
         this.game.sound.mute = !this.game.sound.mute;
         console.log('mute: ', this.game.sound.mute);
-      }, this);
-      muteButton.addChild(new Phaser.Text(this.game, 0, 0, 'mUtE', btnTextStyle));
+      }, this,0,1,2);
+      muteButton.addChild(new Phaser.Text(this.game, 80, -5, 'Mute', btnTextStyle));
       muteButton.alignIn(this.camera.bounds, Phaser.CENTER, 0, 100);
       
       // make pause text
