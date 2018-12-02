@@ -16,7 +16,7 @@ export default class menuState extends Phaser.State {
     let playButton=this.game.add.button(350, 250, 'pen', actionOnClick, this, 'pen_hover.png','pen_normal.png','pen_pressed.png' );
     playButton.addChild(new Phaser.Text(this.game, 105, 0, 'Play', btnTextStyle));
 
-    let charSelect=this.game.add.button(350, 350, 'pen', actionOnClick, this, 'pen_hover.png','pen_normal.png','pen_pressed.png' );//Byt actionOnClick till rätt funktion
+    let charSelect=this.game.add.button(350, 350, 'pen', charSelClicked, this, 'pen_hover.png','pen_normal.png','pen_pressed.png' );//Byt actionOnClick till rätt funktion
     charSelect.addChild(new Phaser.Text(this.game, 10, 0, 'Character selection', btnTextStyle));
 
     const startLabel = this.game.add.text(80, this.game.world.height-80,
@@ -41,4 +41,10 @@ function actionOnClick()
   const playSound = this.add.audio('startljud');
   playSound.play();
   this.game.state.start('play');
+}
+
+function charSelClicked()
+{
+  this.game.state.start('characterSelect');
+  charButton.sfx.play();
 }
