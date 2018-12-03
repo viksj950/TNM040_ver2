@@ -1,5 +1,6 @@
 export default class menuState extends Phaser.State {
   create() {
+    this.game.stage.backgroundColor = "#000000";
     this.background = this.game.add.tileSprite(0, 0, this.game.width, this.game.height - 128, 'gameBackground');
     this.background.alpha = 0.3;
     this.floor = this.game.add.tileSprite(0, this.game.height - 128, 1024, 128, 'floor');
@@ -46,5 +47,5 @@ function actionOnClick()
 function charSelClicked()
 {
   this.game.state.start('characterSelect');
-  charButton.sfx.play();
+  //charButton.sfx.play();
 }

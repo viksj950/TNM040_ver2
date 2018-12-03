@@ -10,7 +10,7 @@ export default class loadState extends Phaser.State {
     this.game.load.image('player', './assets/images/epple.png');
 
     this.game.load.image('obstacle', './assets/images/tenta_red.png');
-	this.game.load.image('powerUp', './assets/images/PU1.png');
+    this.game.load.image('powerUp', './assets/images/PU1.png');
 
     this.game.load.image('obstacle', './assets/images/tenta.png');
 
@@ -20,6 +20,7 @@ export default class loadState extends Phaser.State {
     this.game.load.image('floor', './assets/images/floor.png');
     this.game.load.atlasJSONHash('william', './assets/images/william.png', './assets/images/william.json');
 
+    this.game.load.atlasJSONHash('characters', './assets/images/characters.png', './assets/images/characters.json')
 
     this.game.load.atlasJSONHash('pen', './assets/images/pen_sheet.png', './assets/images/pen_sheet.json');
 

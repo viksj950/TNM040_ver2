@@ -26,6 +26,7 @@ class Game extends Phaser.Game {
     super(config);
 
     this.highScore = 0;
+    this.selectedChar = 0; // the selected character
     
     this.state.add('boot', bootState);
     this.state.add('load', loadState);

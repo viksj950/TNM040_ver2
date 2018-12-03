@@ -110,7 +110,7 @@ export default class playState extends Phaser.State {
 	this.game.physics.arcade.overlap(this.player, this.powerUp, this.powerTaken, null, this);
 
     this.incrementScore();
-    this.obstacles.forEach((child) => {child.angle += 0.5;}); // uppdaterar ju inte hitboxen dock
+    this.obstacles.forEach((child) => {child.angle -= 3;}); // uppdaterar ju inte hitboxen dock
 
 
   }
