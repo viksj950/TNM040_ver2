@@ -13,6 +13,7 @@ import menuState from './menu';
 import characterSelectState from './characterSelect';
 import playState from './play';
 import gameOverState from './gameOver';
+import penButton from './penButton';
 
 const config = {
   width: 1024,

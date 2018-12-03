@@ -1,4 +1,5 @@
 import Player from "./player";
+import penButton from "./penButton";
 
 export default class playState extends Phaser.State {
   create() {
@@ -7,42 +8,41 @@ export default class playState extends Phaser.State {
     this.game.sound.muteOnPause = false;
     
     // add background
-    this.background = this.game.add.tileSprite(0, 0, this.game.width, this.game.height - 128, 'gameBackground');
+    this.background = this.add.tileSprite(0, 0, this.game.width, this.game.height - 128, 'gameBackground');
     this.background.autoScroll(-170, 0);
 
 
-
-    this.floor = this.game.add.tileSprite(0, this.game.height - 128, 1024, 128, 'floor');
+    this.floor = this.add.tileSprite(0, this.game.height - 128, 1024, 128, 'floor');
     this.floor.autoScroll(-170, 0);
     this.game.physics.enable(this.floor);
     this.floor.body.immovable = true;
     
-    this.obstacles = this.game.add.group();
+    this.obstacles = this.add.group();
     this.obstacles.enableBody = true;
     this.addObstacle();
 	
-	this.powerUp = this.game.add.group();
+	this.powerUp = this.add.group();
 	this.addPowerUp();
 
     
     // create player and add
     this.player = new Player(this.game);
-    this.game.add.existing(this.player);
+    this.add.existing(this.player);
     this.player.events.onKilled.add(this.gameOver, this); 
     
     // add obstacles all the time
-    this.game.time.events.loop(2000, this.addObstacle, this);
-	this.game.time.events.loop(3000, this.addPowerUp, this);
+    this.obstacleTimer = this.time.events.loop(2000, this.addObstacle, this);
+    this.time.events.loop(3000, this.addPowerUp, this);
     
     // show lives
-    this.lifeDisp = this.game.add.group();
+    this.lifeDisp = this.add.group();
     for (let i = 0; i < this.player.health; i++) {
-      this.lifeDisp.create(32 + (30 * i), 32, 'player');
+      this.lifeDisp.create(32 + (40 * i), 32, 'powerUp');
     }
 
     // add pause button
     // TODO 
-    this.pauseButton = this.game.add.button(
+    this.pauseButton = this.add.button(
       0, // ändra nog
       0,
       'obstacle', // !!
@@ -54,7 +54,7 @@ export default class playState extends Phaser.State {
     
     // add scorestuff
     this.score = 0;
-    this.scoreLabel = this.game.add.text(50, 50, 'score:\n' + this.score, {
+    this.scoreLabel = this.add.text(50, 50, 'score:\n' + this.score, {
       font: '25px Indie Flower', fill: '#000000'
     });
     this.scoreLabel.anchor.setTo(0.5, 0.5);
@@ -62,7 +62,7 @@ export default class playState extends Phaser.State {
     this.scoreLabel.align = 'center';
     
     // keyboard stuff, blir det skumt när man kan använda fler olika för samma?
-    this.keyboard = this.game.input.keyboard;
+    this.keyboard = this.input.keyboard;
 
     this.downKey = this.keyboard.addKey(Phaser.KeyCode.DOWN);
     this.downKey.onHoldCallback = this.player.duck;
@@ -91,27 +91,32 @@ export default class playState extends Phaser.State {
       this.updateLifeDisp();
     }, this);
     /* -------------- */
-
-    // reset keys? prob not
   }
 
   update() {
     // checks for collision with floor and makes the player run if landing from jump
-    this.game.physics.arcade.collide(this.player, this.floor, (player, floor) => {
+    this.physics.arcade.collide(this.player, this.floor, (player, floor) => {
       if (player.isJumping) player.run();
     });
 
-    this.game.physics.arcade.overlap(this.player, this.obstacles, (player, obstacle) => {
+    this.physics.arcade.overlap(this.player, this.obstacles, (player, obstacle) => {
       player.damage(1);
       obstacle.destroy();
       this.updateLifeDisp();
     }, null, this);
 
-	this.game.physics.arcade.overlap(this.player, this.powerUp, this.powerTaken, null, this);
+    this.physics.arcade.overlap(this.player, this.powerUp, this.powerTaken, null, this);
 
     this.incrementScore();
     this.obstacles.forEach((child) => {child.angle -= 3;}); // uppdaterar ju inte hitboxen dock
 
+    if (this.score % 500 === 0) {
+      this.increaseDifficulty();
+    }
+  }
+
+  increaseDifficulty() {
+    this.obstacleTimer.delay -= 100;
 
   }
 
@@ -120,14 +125,14 @@ export default class playState extends Phaser.State {
     // this.game.debug.body(this.player);
     // this.game.debug.bodyInfo(this.player, 32, 32);
     // this.game.debug.text(`totalElapsedSeconds : ${this.game.time.totalElapsedSeconds().toFixed(5)}`, 32, 32);
-    this.game.debug.text(this.game.time.fps, 2, 14, "#00ff00");
+    // this.game.debug.text(this.game.time.fps, 2, 14, "#00ff00");
     //this.obstacles.forEachAlive((member) => {this.game.debug.body(member);}, this);
     // this.game.debug.text(this.player.health, 100, 14,"#ffffff");
   }
 
   addObstacle() {
     // let obstaclePosition = [16,48,100];
-    const obstaclePosition = [150, 200, 285];
+    const obstaclePosition = [150, 185, 285];
 
     let newObstacle = this.obstacles.create(
       this.game.width + 50,
@@ -154,13 +159,11 @@ export default class playState extends Phaser.State {
       console.log("pickup!");
   }
 
-  gameOver() {
-	  var ajsomfan=this.add.audio('hurtljud');
-    ajsomfan.play();
-    
+  gameOver() {    
     // timergrejen måste förhindra hopp och grejor
     // // wait a little and then go to gameOver
     // let timer = this.game.time.create(true);
+    // // this.physics.arcade.isPaused = true;
     // timer.add(1200,() => {this.game.state.start('gameOver')}, this);
     // timer.start();
     this.game.state.start('gameOver', true, false, this.score);
@@ -171,7 +174,6 @@ export default class playState extends Phaser.State {
   incrementScore() {
     this.score += 1;
     this.scoreLabel.text = 'score:\n' + this.score;
-    // TODO
   }
 
   togglePause() {
@@ -185,39 +187,28 @@ export default class playState extends Phaser.State {
       this.overlay.drawRect(0, 0, this.game.width, this.game.height);
       this.overlay.endFill();
 
-      this.pauseMenu = this.game.add.group();
+      this.pauseMenu = this.add.group();
 
-      const btnTextStyle = {font: '50px Indie Flower', fill: '#ffffff'};
-        btnTextStyle.stroke = "#000000";
-        btnTextStyle.strokeThickness = 6;
-
-      // make resume button
-      let resumeButton = new Phaser.Button(this.game, 0, 0, 'pen', this.togglePause, this,0,1,2); // byt texture
-      resumeButton.addChild(new Phaser.Text(this.game, 50, -5, 'Resume', btnTextStyle));
+      // make buttons
+      let resumeButton = new penButton(this.game, 0, 0, 'Resume', this.togglePause, this);
       resumeButton.alignIn(this.camera.bounds, Phaser.CENTER);
-      
-      // make mute button
-      let muteButton = new Phaser.Button(this.game, 0, 0, 'pen', () => { // TODO visa om på eller av
+
+      let muteButton = new penButton(this.game, 0, 0, 'Mute', () => { // TODO visa om på eller av eller ska nogm flytta
         this.game.sound.mute = !this.game.sound.mute;
         console.log('mute: ', this.game.sound.mute);
-      }, this,0,1,2);
-      muteButton.addChild(new Phaser.Text(this.game, 80, -5, 'Mute', btnTextStyle));
+      }, this);
       muteButton.alignIn(this.camera.bounds, Phaser.CENTER, 0, 100);
       
       // make pause text
-      let pauseText = this.game.add.text(
-        0,
-        0,
-        'Game Paused',
-        {font: '70px Indie Flower', fill: '#ffff00'}
-      );
-      pauseText.alignIn(this.camera.bounds, Phaser.CENTER, 0, -100);
+      let pauseText = this.game.add.text( 0, 0, 'Game Paused', {
+        font: '70px Indie Flower', fill: '#ffffff', stroke: '#000000', strokeThickness: 6
+      });
+      pauseText.alignIn(this.camera.bounds, Phaser.CENTER, 0, -100); // går att lägga på i slutet av förra
       
       //add buttons and stuff to pausemenu group
       this.pauseMenu.add(pauseText);
       this.pauseMenu.add(resumeButton);
       this.pauseMenu.add(muteButton);
-
     } else {
       this.pauseMenu.destroy();
       this.overlay.destroy();
