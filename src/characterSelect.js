@@ -2,7 +2,7 @@ import penButton from "./penButton";
 
 export default class characterSelectState extends Phaser.State {
   create() {
-    //this.game.stage.backgroundColor = "#ffffff"; //ändrar bakgrundsfärgen
+    // dark background
     this.game.stage.backgroundColor = "#000000";
     this.background = this.add.tileSprite(0, 0, this.game.width, this.game.height - 128, 'gameBackground');
     this.background.alpha = 0.3;
@@ -27,21 +27,12 @@ export default class characterSelectState extends Phaser.State {
     graphics.lineTo(800, 100);
     graphics.endFill();
 
-    this.nCharacters = 5;
+    this.nCharacters = 5; // number of characters
+
 
     // the players
     this.selectedPlayer = this.add.sprite(0, 0, 'characters', 1);
     this.selectedPlayer.alignIn(this.camera.bounds, Phaser.CENTER);
-
-    // this.leftPlayer = this.game.add.sprite(0, 0, 'characters', 0);
-    // this.leftPlayer.scale.setTo(0.7, 0.7);
-    // this.leftPlayer.alpha = 0.5;
-    // this.leftPlayer.alignTo(this.selectedPlayer, Phaser.LEFT_CENTER);
-
-    // this.rightPlayer = this.game.add.sprite(0, 0, 'characters', 2);
-    // this.rightPlayer.scale.setTo(0.7, 0.7);
-    // this.rightPlayer.alpha = 0.5;
-    // this.rightPlayer.alignTo(this.selectedPlayer, Phaser.RIGHT_CENTER);
 
     this.leftPlayer = this.add.button(0, 0, 'characters', this.changeSelectionLeft, this);
     this.leftPlayer.frame = 0;
@@ -54,6 +45,7 @@ export default class characterSelectState extends Phaser.State {
     this.rightPlayer.scale.setTo(0.7, 0.7);
     this.rightPlayer.alpha = 0.5;
     this.rightPlayer.alignTo(this.selectedPlayer, Phaser.RIGHT_CENTER);
+
 
     const nameLabel = this.add.text(20, 10, 'Select your character\n', { // newline to fix text being cut off
       font: '70px Indie Flower', fill: '#ffffff', stroke: '#000000', strokeThickness: 6
@@ -71,7 +63,6 @@ export default class characterSelectState extends Phaser.State {
 
     this.menuButton = this.add.existing(new penButton(this.game, 500, 0, 'Menu', this.menu, this, true));
     this.menuButton.alignIn(this.camera.bounds, Phaser.BOTTOM_LEFT, this.menuButton.width + btnPadding, btnPadding);
-
 
 
     // keyboard
@@ -106,7 +97,7 @@ export default class characterSelectState extends Phaser.State {
     this.rightPlayer.frame = checkBounds(this.rightPlayer, step, this.nCharacters);
 
     this.game.selectedChar = (this.selectedPlayer.frameName.split('.'))[0]; //remove '.png'
-    console.log(this.game.selectedChar);
+    // console.log(this.game.selectedChar);
     
     function checkBounds(player, step, n) {
       let temp = player.frame + step;

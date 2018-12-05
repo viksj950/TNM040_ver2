@@ -8,23 +8,18 @@ export default class gameOverState extends Phaser.State {
   create() { // TODO gör likadan som menu nästan?
     let newHighScore = false;
 
-    if (this.score > this.game.highScore) {
+    if (this.score > this.game.highScore) { 
       newHighScore = true;
       this.game.highScore = this.score;
     }
+    //set background
     this.game.stage.backgroundColor = "#000000";
     this.background = this.add.tileSprite(0, 0, this.game.width, this.game.height - 128, 'gameBackground');
     this.background.alpha = 0.3;
     this.floor = this.add.tileSprite(0, this.game.height - 128, 1024, 128, 'floor');
     this.floor.alpha = 0.3;
 
-    // const nameLabel = this.game.add.text(
-    //   80,
-    //   80,
-    //   `Game over, your score: ${this.score}\nHigh Score: ${this.game.highScore}`,
-    //   {font: '50px Indie Flower', fill: '#00ff00'}
-    // );
-    // TODO kolla om ny highscore och isf uppmärksamma
+    // show score/highscore
     let nameLabel = this.add.text(20, 10, `Game Over, score: ${this.score}`, { // newline to fix text being cut off
       font: '70px Indie Flower', fill: '#ffffff', stroke: '#000000', strokeThickness: 6
     });
@@ -56,8 +51,6 @@ export default class gameOverState extends Phaser.State {
     let menuButton = this.add.existing(new penButton(this.game, 0, 0, 'Menu', this.menu, this));
     menuButton.alignIn(this.camera.bounds, Phaser.CENTER, 0, 100);
     
-
-
     // // keyboard
     // const wKey = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
     // wKey.onDown.addOnce(this.restart, this);

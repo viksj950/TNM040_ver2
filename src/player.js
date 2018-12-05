@@ -1,7 +1,8 @@
 export default class Player extends Phaser.Sprite {
-  constructor(game, x, y) {
+  constructor(game, x, y, demo) {
     super(game, x, y, game.selectedChar, 'jump.png'); // tappar ner spealren från toppen hehe!!!
-    
+    this.demo = demo; // silence jump
+
     this.health = this.maxHealth = 3;
     this.isJumping = true; // kunde nog va false om spelaren spawnar på marken
 
@@ -23,7 +24,7 @@ export default class Player extends Phaser.Sprite {
     this.animations.add('damage' , ['damage.png'], 2, false)
         .onComplete.add(() => {this.animations.play('run')}, this); //return to run anim when done
     this.animations.add('powerup' , ['powerup.png'], 2, false)
-        .onComplete.add(() => {this.animations.play('run')}, this); //return to run anim when done
+        .onComplete.add(() => {this.animations.play('run')}, this); // TODO måste fixa
 
     this.duck = this.duck.bind(this);
     this.run = this.run.bind(this);
@@ -36,7 +37,7 @@ export default class Player extends Phaser.Sprite {
       this.isJumping = true;
       this.body.setSize(50, 150, 75, 130);
       this.animations.play('jump');
-      this.jumpSound.play();
+      if (!this.demo) this.jumpSound.play();
     }
   }
 
@@ -81,10 +82,7 @@ export default class Player extends Phaser.Sprite {
 
     return this;*/
 
-
     this.alive = false;
-    // this.exists = false;
-    // this.visible = false;
 
     console.log('player killed');
     this.animations.play('damage', 1, true);
