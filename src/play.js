@@ -6,14 +6,18 @@ export default class playState extends Phaser.State {
     this.game.time.advancedTiming = true; // för att kunna visa fps
 
     this.game.sound.muteOnPause = false;
+
+    // things to tune
+    this.obstacleSpeed = 500;
+    this.backgroundSpeed = 250;
+    this.difficultyThing = 1;
+
     
     // add background
     this.background = this.add.tileSprite(0, 0, this.game.width, this.game.height - 128, 'gameBackground');
-    this.background.autoScroll(-170, 0);
-
-
+    this.background.autoScroll(-this.backgroundSpeed, 0);
     this.floor = this.add.tileSprite(0, this.game.height - 128, 1024, 128, 'floor');
-    this.floor.autoScroll(-170, 0);
+    this.floor.autoScroll(-this.backgroundSpeed, 0);
     this.game.physics.enable(this.floor);
     this.floor.body.immovable = true;
     
@@ -26,13 +30,13 @@ export default class playState extends Phaser.State {
 
     
     // create player and add
-    this.player = new Player(this.game);
+    this.player = new Player(this.game, 20, 50);
     this.add.existing(this.player);
     this.player.events.onKilled.add(this.gameOver, this); 
     
     // add obstacles all the time
     this.obstacleTimer = this.time.events.loop(2000, this.addObstacle, this);
-    this.time.events.loop(3000, this.addPowerUp, this);
+    // this.time.events.loop(3000, this.addPowerUp, this);
     
     // show lives
     this.lifeDisp = this.add.group();
@@ -45,12 +49,12 @@ export default class playState extends Phaser.State {
     this.pauseButton = this.add.button(
       0, // ändra nog
       0,
-      'obstacle', // !!
+      'mute', // !!
       this.togglePause,
       this // här kan man fylla i frames för hover osv sen
     ); // alignTo()
     // this.pauseButton.anchor.set(0.5);
-    this.pauseButton.alignIn(this.camera.view, Phaser.TOP_RIGHT, -32, -32);
+    this.pauseButton.alignIn(this.camera.view, Phaser.TOP_RIGHT, -24, -24);
     
     // add scorestuff
     this.score = 0;
@@ -68,15 +72,15 @@ export default class playState extends Phaser.State {
     this.downKey.onHoldCallback = this.player.duck;
     this.downKey.onUp.add(this.player.run);
     
-    this.sKey = this.keyboard.addKey(Phaser.KeyCode.S);
-    this.sKey.onHoldCallback = this.player.duck;
-    this.sKey.onUp.add(this.player.run);
+    // this.sKey = this.keyboard.addKey(Phaser.KeyCode.S);
+    // this.sKey.onHoldCallback = this.player.duck;
+    // this.sKey.onUp.add(this.player.run);
 
     this.upKey = this.keyboard.addKey(Phaser.KeyCode.UP);
     this.upKey.onHoldCallback = this.player.jump;
 
-    this.wKey = this.keyboard.addKey(Phaser.KeyCode.W);
-    this.wKey.onHoldCallback = this.player.jump;
+    // this.wKey = this.keyboard.addKey(Phaser.KeyCode.W);
+    // this.wKey.onHoldCallback = this.player.jump;
 
     this.pKey = this.keyboard.addKey(Phaser.KeyCode.P);
     this.pKey.onDown.add(this.togglePause, this);
@@ -108,16 +112,36 @@ export default class playState extends Phaser.State {
     this.physics.arcade.overlap(this.player, this.powerUp, this.powerTaken, null, this);
 
     this.incrementScore();
-    this.obstacles.forEach((child) => {child.angle -= 3;}); // uppdaterar ju inte hitboxen dock
+    this.obstacles.forEach((child) => {child.angle -= 3;}); // uppdaterar ju inte hitboxen dock, verkar finnas angular velocity?
 
-    if (this.score % 500 === 0) {
+    if (this.score % 250 === 0) {
       this.increaseDifficulty();
     }
   }
 
   increaseDifficulty() {
-    this.obstacleTimer.delay -= 100;
+    // const speedIncrease = 20;
 
+    // this.obstacleTimer.delay -= 0;
+    // this.obstacleSpeed += speedIncrease;
+
+    // this.obstacles.forEach((obstacle) => {
+    //   obstacle.body.velocity.x = -this.obstacleSpeed;
+    // });
+
+    // this.backgroundSpeed += speedIncrease;
+    // this.background.autoScroll(-this.backgroundSpeed, 0);
+    // this.floor.autoScroll(-this.backgroundSpeed, 0);
+
+    // console.log('obstacleSpeed: ', this.obstacleSpeed, 'Timer: ', this.obstacleTimer.delay);
+
+    this.difficultyThing *= 0.9;
+    this.obstacleTimer.delay = this.difficultyThing*350 + 700;
+    
+    // this.obstacleTimer.delay = 700;
+    //Delay 700 är typ svårt men inte omöjligt
+    console.log(this.obstacleTimer.delay);
+    
   }
 
   //debug stuff
@@ -131,18 +155,20 @@ export default class playState extends Phaser.State {
   }
 
   addObstacle() {
-    // let obstaclePosition = [16,48,100];
-    const obstaclePosition = [150, 185, 285];
+    // const obstaclePosition = [150, 185, 285];
+    const obstaclePosition = [30, 80, 200, 230];
 
     let newObstacle = this.obstacles.create(
       this.game.width + 50,
-      this.game.height - obstaclePosition[Math.floor(Math.random()*(4-1)+1)-1],
+      this.background.height - obstaclePosition[this.rnd.between(0, 3)],
       'obstacle'
     ); //this.game.height - önskad höjd på hindret
     newObstacle.body.setSize(24, 24, 0, 4); // verkar funka med 24x32-bild
     newObstacle.anchor.setTo(0.5, 0.5);
     newObstacle.lifespan = 10000; // TODO se till att detta är ett rimligt värde
-    newObstacle.body.velocity.x = -200;
+    // newObstacle.body.velocity.x = -200;
+    newObstacle.body.velocity.x = - this.obstacleSpeed;
+    // newObstacle.body.velocity.x = -500;
   }
   
   addPowerUp() {
@@ -204,6 +230,8 @@ export default class playState extends Phaser.State {
         font: '70px Indie Flower', fill: '#ffffff', stroke: '#000000', strokeThickness: 6
       });
       pauseText.alignIn(this.camera.bounds, Phaser.CENTER, 0, -100); // går att lägga på i slutet av förra
+
+      this.pauseButton.bringToTop(); // ...
       
       //add buttons and stuff to pausemenu group
       this.pauseMenu.add(pauseText);

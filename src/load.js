@@ -6,24 +6,35 @@ export default class loadState extends Phaser.State {
     // let loadingLabel = this.game.add.text(80, 150, 'loading...',
     //     {font: '30px Indie Flower', fill: '#afdfdd'});
 
-    // load assets
-    this.game.load.image('player', './assets/images/epple.png');
+    
+    this.game.load.image('mute', './assets/images/Mute_1.png');
+    this.game.load.image('logo', './assets/images/Unilife.png');
 
     this.game.load.image('obstacle', './assets/images/tenta_red.png');
     this.game.load.image('powerUp', './assets/images/PU1.png');
 
     this.game.load.image('obstacle', './assets/images/tenta.png');
 
-    this.game.load.image('startButton','./assets/images/startbuttonup.png');
+    // this.game.load.image('startButton','./assets/images/startbuttonup.png');
 
     this.game.load.image('gameBackground', './assets/images/gameBackground.png');
     this.game.load.image('floor', './assets/images/floor.png');
+
+    // character sprites
     this.game.load.atlasJSONHash('william', './assets/images/william.png', './assets/images/william.json');
+    this.game.load.atlasJSONHash('arvid', './assets/images/arvid.png', './assets/images/arvid.json');
+    this.game.load.atlasJSONHash('anton', './assets/images/anton.png', './assets/images/anton.json');
+    this.game.load.atlasJSONHash('viktor', './assets/images/viktor.png', './assets/images/viktor.json');
 
     this.game.load.atlasJSONHash('characters', './assets/images/characters.png', './assets/images/characters.json')
 
+    // button textures
     this.game.load.atlasJSONHash('pen', './assets/images/pen_sheet.png', './assets/images/pen_sheet.json');
+    
+    this.game.load.image('up', './assets/images/up_key.png');
+    this.game.load.image('down', './assets/images/down_key.png');
 
+    // sounds
     this.game.load.audio('startljud','./assets/sound/startknapptryckning.wav');
     this.game.load.audio('hurtljud','./assets/sound/hurt.wav');
     this.game.load.audio('hoppljud','./assets/sound/hopp.wav')
