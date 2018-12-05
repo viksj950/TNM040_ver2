@@ -26,6 +26,7 @@ export default class playState extends Phaser.State {
     this.addObstacle();
 	
 	this.powerUp = this.add.group();
+	this.powerUp.enableBody = true;
 	this.addPowerUp();
 
     
@@ -36,12 +37,19 @@ export default class playState extends Phaser.State {
     
     // add obstacles all the time
     this.obstacleTimer = this.time.events.loop(2000, this.addObstacle, this);
-    // this.time.events.loop(3000, this.addPowerUp, this);
+    this.hjertTimer= this.time.events.loop(3000, this.addPowerUp, this);
+	
+	//this.game.time.events.loop(this.game.rnd.integerInRange(5000, 12000), this.addPowerUp, this);
+	
+	/*
+	this.game.time.events.loop(2000, this.addObstacle, this);
+	this.game.time.events.loop(this.game.rnd.integerInRange(5000, 12000), this.addPowerUp, this);
+	*/
     
     // show lives
-    this.lifeDisp = this.add.group();
+    this.lifeDisp = this.add.group(); //this.game?
     for (let i = 0; i < this.player.health; i++) {
-      this.lifeDisp.create(32 + (40 * i), 32, 'powerUp');
+      this.lifeDisp.create(32 + (40 * i), 32, 'powerUp'); //'player'
     }
 
     // add pause button
@@ -108,8 +116,35 @@ export default class playState extends Phaser.State {
       obstacle.destroy();
       this.updateLifeDisp();
     }, null, this);
+	
+	this.game.physics.arcade.overlap(this.player, this.powerUp,(player, powerUp) =>
+	{
+		
+	
+		if(this.player.health != 3)
+		{
+		let image = this.game.add.image(110, 200, 'bonusLife');
+				
+		this.game.time.events.add(600, function() {    this.game.add.tween(image).to({y: 0}, 1500, Phaser.Easing.Linear.None, true);    
+		this.game.add.tween(image).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);}, this);
+		this.player.heal(1);
+		
+		this.updateLifeDisp();
+			
+	    var pickup=this.add.audio('power');
+		pickup.play();
+		}
+		
+		else
+		{
+			var ajsomfan=this.add.audio('dontHeal');
+			ajsomfan.play();
+		}
+		  powerUp.destroy();
+		  
+	}, null, this);
 
-    this.physics.arcade.overlap(this.player, this.powerUp, this.powerTaken, null, this);
+    //this.physics.arcade.overlap(this.player, this.powerUp, this.powerTaken, null, this);
 
     this.incrementScore();
     this.obstacles.forEach((child) => {child.angle -= 3;}); // uppdaterar ju inte hitboxen dock, verkar finnas angular velocity?
@@ -142,6 +177,7 @@ export default class playState extends Phaser.State {
     //Delay 700 är typ svårt men inte omöjligt
     console.log(this.obstacleTimer.delay);
     
+    this.obstacleTimer.delay -= 100;
   }
 
   //debug stuff
@@ -177,13 +213,18 @@ export default class playState extends Phaser.State {
 	  this.game.physics.enable(this.powerUp, Phaser.Physics.ARCADE);
 	this.powerUp.forEach((item) => { item.body.velocity.x = -200;
 	console.log("iloop");});
+	 
+
+
+	//this.game.time.events.loop(this.game.rnd.integerInRange(5000, 12000), this.addPowerUp, this);
   }
   
+  /*
   powerTaken(){
        this.game.add.text(80, 150, 'power!',
         {font: '30px Courier', fill: '#afdfdd'});
       console.log("pickup!");
-  }
+  } */
 
   gameOver() {    
     // timergrejen måste förhindra hopp och grejor
@@ -192,6 +233,9 @@ export default class playState extends Phaser.State {
     // // this.physics.arcade.isPaused = true;
     // timer.add(1200,() => {this.game.state.start('gameOver')}, this);
     // timer.start();
+	var ajsomfan=this.add.audio('GO');
+    ajsomfan.play();
+    
     this.game.state.start('gameOver', true, false, this.score);
   }
 
