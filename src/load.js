@@ -15,6 +15,8 @@ export default class loadState extends Phaser.State {
     this.game.load.image('obstacle', './assets/images/tenta.png');
 
     this.game.load.image('startButton','./assets/images/startbuttonup.png');
+	
+	this.game.load.image('bonusLife','./assets/images/dummy.png'); //TEMP
 
     this.game.load.image('gameBackground', './assets/images/gameBackground.png');
     this.game.load.image('floor', './assets/images/floor.png');
@@ -29,6 +31,7 @@ export default class loadState extends Phaser.State {
     this.game.load.audio('hoppljud','./assets/sound/hopp.wav')
 	this.game.load.audio('power','./assets/sound/Powerup.wav');
 	this.game.load.audio('GO','./assets/sound/startknapptryckning.wav');
+	this.game.load.audio('dontHeal','./assets/sound/health_pickup_denied.wav');
   }
 
   create() {

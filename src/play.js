@@ -116,16 +116,26 @@ export default class playState extends Phaser.State {
 	this.game.physics.arcade.overlap(this.player, this.powerUp,(player, powerUp) =>
 	{
 		
-      let p = this.game.add.text(80, 150, 'Bonus Lyfe!',
-        {font: '20px Courier', fill: '#ffffff"'});
-		
-		this.game.time.events.add(600, function() {    this.game.add.tween(p).to({y: 0}, 1500, Phaser.Easing.Linear.None, true);    
-		this.game.add.tween(p).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);}, this);
+	
+		if(this.player.health != 3)
+		{
+		let image = this.game.add.image(110, 200, 'bonusLife');
+				
+		this.game.time.events.add(600, function() {    this.game.add.tween(image).to({y: 0}, 1500, Phaser.Easing.Linear.None, true);    
+		this.game.add.tween(image).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);}, this);
 		this.player.heal(1);
-
-      this.updateLifeDisp();
-	     var pickup=this.add.audio('power');
+		
+		this.updateLifeDisp();
+			
+	    var pickup=this.add.audio('power');
 		pickup.play();
+		}
+		
+		else
+		{
+			var ajsomfan=this.add.audio('dontHeal');
+			ajsomfan.play();
+		}
 		  powerUp.destroy();
 		  
 	}, null, this);
