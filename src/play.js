@@ -33,7 +33,9 @@ export default class playState extends Phaser.State {
     
     // add obstacles all the time
     this.obstacleTimer = this.time.events.loop(2000, this.addObstacle, this);
-    this.time.events.loop(3000, this.addPowerUp, this);
+    this.hjertTimer= this.time.events.loop(3000, this.addPowerUp, this);
+	
+	//this.game.time.events.loop(this.game.rnd.integerInRange(5000, 12000), this.addPowerUp, this);
 	
 	/*
 	this.game.time.events.loop(2000, this.addObstacle, this);
@@ -140,7 +142,6 @@ export default class playState extends Phaser.State {
 
   increaseDifficulty() {
     this.obstacleTimer.delay -= 100;
-
   }
 
   //debug stuff
@@ -174,6 +175,10 @@ export default class playState extends Phaser.State {
 	  this.game.physics.enable(this.powerUp, Phaser.Physics.ARCADE);
 	this.powerUp.forEach((item) => { item.body.velocity.x = -200;
 	console.log("iloop");});
+	 
+
+
+	//this.game.time.events.loop(this.game.rnd.integerInRange(5000, 12000), this.addPowerUp, this);
   }
   
   /*
