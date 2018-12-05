@@ -11,14 +11,17 @@ export default class Player extends Phaser.Sprite {
     this.body.collideWorldBounds = true;
 
     this.body.setSize(50, 180, 75, 10); // mixtrar med hitboxen
-	let ajsomfan=this.game.add.audio('hurtljud');
+
+    //sounds
+    this.jumpSound = this.game.add.audio('hoppljud');
+    this.hurtSound = this.game.add.audio('hurtljud');
     
     //animations
     this.animations.add('run', ['walk1.png', 'walk2.png', 'walk3.png', 'walk2.png'], 5, true);
     this.animations.add('jump', ['jump.png'], 5, true);
     this.animations.add('duck', ['duck.png'], 5, true);
-    let damageAnim = this.animations.add('damage' , ['damage.png'], 2, false);
-    damageAnim.onComplete.add(() => {this.animations.play('run')}, this); //return to run anim when done
+    this.animations.add('damage' , ['damage.png'], 2, false)
+      .onComplete.add(() => {this.animations.play('run')}, this); //return to run anim when done
 
     this.duck = this.duck.bind(this);
     this.run = this.run.bind(this);
@@ -27,20 +30,18 @@ export default class Player extends Phaser.Sprite {
 
   jump() {
     if (!this.isJumping) {
-		let ajsomfan=this.game.add.audio('hoppljud');
       this.body.velocity.y = -500;
       this.isJumping = true;
       this.body.setSize(50, 90, 75, 100);
       this.animations.play('jump');
-    ajsomfan.play();
+      this.jumpSound.play();
     }
   }
 
-  damage(amount) {    
-  let ajsomfan=this.game.add.audio('hurtljud');
-    ajsomfan.play();
+  damage(amount) {
     super.damage(amount);
     this.animations.play('damage');
+    this.hurtSound.play();
     
     return this;
   }

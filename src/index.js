@@ -13,6 +13,7 @@ import menuState from './menu';
 import characterSelectState from './characterSelect';
 import playState from './play';
 import gameOverState from './gameOver';
+import penButton from './penButton';
 
 const config = {
   width: 1024,
@@ -26,6 +27,7 @@ class Game extends Phaser.Game {
     super(config);
 
     this.highScore = 0;
+    this.selectedChar = 0; // the selected character
     
     this.state.add('boot', bootState);
     this.state.add('load', loadState);
