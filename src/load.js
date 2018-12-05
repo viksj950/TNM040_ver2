@@ -27,6 +27,8 @@ export default class loadState extends Phaser.State {
     this.game.load.audio('startljud','./assets/sound/startknapptryckning.wav');
     this.game.load.audio('hurtljud','./assets/sound/hurt.wav');
     this.game.load.audio('hoppljud','./assets/sound/hopp.wav')
+	this.game.load.audio('power','./assets/sound/Powerup.wav');
+	this.game.load.audio('GO','./assets/sound/startknapptryckning.wav');
   }
 
   create() {

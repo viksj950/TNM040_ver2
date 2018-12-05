@@ -10,12 +10,18 @@ export default class menuState extends Phaser.State {
     this.floor.alpha = 0.3;
 
     // text
-    const nameLabel = this.add.text(80, 80, 'yo momma so fat this screen is black',
+    const nameLabel = this.add.text(80, 80, 'Welcome to Uni-Lyfe',
         {font: '50px Arial', fill: '#fcbfff'});
     
     const startLabel = this.add.text(80, this.game.world.height-80, 'press "w" to start', {
       font: '25px Arial', fill: '#fffeab'
     });
+	
+	/*
+	const btnTextStyle = {font: '30px Indie Flower', fill: '#ffffff'};
+      btnTextStyle.stroke = "#000000";
+      btnTextStyle.strokeThickness = 6;
+	  */
 
     // buttons
     let playButton = this.add.existing(
@@ -35,10 +41,14 @@ export default class menuState extends Phaser.State {
   }
 
   start() {
+	const playSound = this.add.audio('startljud');
+	playSound.play();
     this.game.state.start('play');
   }
 
   charSelection() {
+	const playSound = this.add.audio('startljud');
+	playSound.play();
     this.game.state.start('characterSelect');
   }
 }

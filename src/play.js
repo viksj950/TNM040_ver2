@@ -22,22 +22,28 @@ export default class playState extends Phaser.State {
     this.addObstacle();
 	
 	this.powerUp = this.add.group();
+	this.powerUp.enableBody = true;
 	this.addPowerUp();
 
     
     // create player and add
     this.player = new Player(this.game);
-    this.add.existing(this.player);
+    this.add.existing(this.player); //this.game.add?
     this.player.events.onKilled.add(this.gameOver, this); 
     
     // add obstacles all the time
     this.obstacleTimer = this.time.events.loop(2000, this.addObstacle, this);
     this.time.events.loop(3000, this.addPowerUp, this);
+	
+	/*
+	this.game.time.events.loop(2000, this.addObstacle, this);
+	this.game.time.events.loop(this.game.rnd.integerInRange(5000, 12000), this.addPowerUp, this);
+	*/
     
     // show lives
-    this.lifeDisp = this.add.group();
+    this.lifeDisp = this.add.group(); //this.game?
     for (let i = 0; i < this.player.health; i++) {
-      this.lifeDisp.create(32 + (40 * i), 32, 'powerUp');
+      this.lifeDisp.create(32 + (40 * i), 32, 'powerUp'); //'player'
     }
 
     // add pause button
@@ -104,8 +110,25 @@ export default class playState extends Phaser.State {
       obstacle.destroy();
       this.updateLifeDisp();
     }, null, this);
+	
+	this.game.physics.arcade.overlap(this.player, this.powerUp,(player, powerUp) =>
+	{
+		
+      let p = this.game.add.text(80, 150, 'Bonus Lyfe!',
+        {font: '20px Courier', fill: '#ffffff"'});
+		
+		this.game.time.events.add(600, function() {    this.game.add.tween(p).to({y: 0}, 1500, Phaser.Easing.Linear.None, true);    
+		this.game.add.tween(p).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);}, this);
+		this.player.heal(1);
 
-    this.physics.arcade.overlap(this.player, this.powerUp, this.powerTaken, null, this);
+      this.updateLifeDisp();
+	     var pickup=this.add.audio('power');
+		pickup.play();
+		  powerUp.destroy();
+		  
+	}, null, this);
+
+    //this.physics.arcade.overlap(this.player, this.powerUp, this.powerTaken, null, this);
 
     this.incrementScore();
     this.obstacles.forEach((child) => {child.angle -= 3;}); // uppdaterar ju inte hitboxen dock
@@ -153,11 +176,12 @@ export default class playState extends Phaser.State {
 	console.log("iloop");});
   }
   
+  /*
   powerTaken(){
        this.game.add.text(80, 150, 'power!',
         {font: '30px Courier', fill: '#afdfdd'});
       console.log("pickup!");
-  }
+  } */
 
   gameOver() {    
     // timergrejen måste förhindra hopp och grejor
@@ -166,6 +190,9 @@ export default class playState extends Phaser.State {
     // // this.physics.arcade.isPaused = true;
     // timer.add(1200,() => {this.game.state.start('gameOver')}, this);
     // timer.start();
+	var ajsomfan=this.add.audio('GO');
+    ajsomfan.play();
+    
     this.game.state.start('gameOver', true, false, this.score);
   }
 
