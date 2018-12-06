@@ -1,16 +1,17 @@
 export default class Player extends Phaser.Sprite {
-  constructor(game) {
-    super(game, 20, 50, 'william', 'jump.png'); // tappar ner spealren från toppen hehe!!!
-    
+  constructor(game, x, y, demo) {
+    super(game, x, y, game.selectedChar, 'jump.png'); // tappar ner spealren från toppen hehe!!!
+    this.demo = demo; // silence jump
+
     this.health = this.maxHealth = 3;
     this.isJumping = true; // kunde nog va false om spelaren spawnar på marken
 
     this.game.physics.enable(this);
-    this.body.gravity.y = 1100;
+    this.body.gravity.y = 1500;
     this.body.allowGravity = true;
     this.body.collideWorldBounds = true;
 
-    this.body.setSize(50, 180, 75, 10); // mixtrar med hitboxen
+    this.body.setSize(50, 230, 75, 50); // mixtrar med hitboxen
 
     //sounds
     this.jumpSound = this.game.add.audio('hoppljud');
@@ -21,7 +22,9 @@ export default class Player extends Phaser.Sprite {
     this.animations.add('jump', ['jump.png'], 5, true);
     this.animations.add('duck', ['duck.png'], 5, true);
     this.animations.add('damage' , ['damage.png'], 2, false)
-      .onComplete.add(() => {this.animations.play('run')}, this); //return to run anim when done
+        .onComplete.add(() => {this.animations.play('run')}, this); //return to run anim when done
+    this.animations.add('powerup' , ['powerup.png'], 2, false)
+        .onComplete.add(() => {this.animations.play('run')}, this); // TODO måste fixa
 
     this.duck = this.duck.bind(this);
     this.run = this.run.bind(this);
@@ -30,11 +33,11 @@ export default class Player extends Phaser.Sprite {
 
   jump() {
     if (!this.isJumping) {
-      this.body.velocity.y = -500;
+      this.body.velocity.y = -600;
       this.isJumping = true;
-      this.body.setSize(50, 90, 75, 100);
+      this.body.setSize(50, 150, 75, 130);
       this.animations.play('jump');
-      this.jumpSound.play();
+      if (!this.demo) this.jumpSound.play();
     }
   }
 
@@ -48,7 +51,7 @@ export default class Player extends Phaser.Sprite {
 
   duck() {
     if (!this.isJumping) {
-      this.body.setSize(55, 95, 75, 95);
+      this.body.setSize(50, 150, 75, 130);
       this.animations.play('duck');
     }
   }
@@ -57,8 +60,13 @@ export default class Player extends Phaser.Sprite {
     if (this.body.touching.down) {
       this.isJumping = false;
       this.animations.play('run', 5, true);
-      this.body.setSize(50, 180, 75, 10);
+      this.body.setSize(50, 230, 75, 50);
     }
+  }
+
+  heal(amount) {
+    super.heal(amount);
+    this.animations.play('powerup');
   }
 
   kill() {
@@ -74,10 +82,7 @@ export default class Player extends Phaser.Sprite {
 
     return this;*/
 
-
     this.alive = false;
-    // this.exists = false;
-    // this.visible = false;
 
     console.log('player killed');
     this.animations.play('damage', 1, true);
