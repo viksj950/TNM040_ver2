@@ -27,6 +27,7 @@ export default class loadState extends Phaser.State {
     this.game.load.atlasJSONHash('arvid', './assets/images/arvid.png', './assets/images/arvid.json');
     this.game.load.atlasJSONHash('anton', './assets/images/anton.png', './assets/images/anton.json');
     this.game.load.atlasJSONHash('viktor', './assets/images/viktor.png', './assets/images/viktor.json');
+    this.game.load.atlasJSONHash('linnea', './assets/images/linnea.png', './assets/images/linnea.json');
 
     this.game.load.atlasJSONHash('characters', './assets/images/characters.png', './assets/images/characters.json')
 
