@@ -51,4 +51,3 @@ WebFont.load({
     families: ['Indie Flower']
   }
 });
-

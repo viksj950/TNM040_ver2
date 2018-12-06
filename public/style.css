@@ -1,3 +1,20 @@
 body {
 	background-color: gray;
 }
+
+canvas {
+	padding-left: 0;
+	padding-right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	background-image: url("assets/images/william.png");
+	background-color:#cccccc;
+	background-repeat: repeat;
+}
+
+body{
+	background-image: url("assets/images/william.png");
+	background-color: #cccccc;
+	background-repeat: repeat;
+}

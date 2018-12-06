@@ -12,86 +12,49 @@ export default class menuState extends Phaser.State {
     this.game.physics.enable(this.floor);
     this.floor.body.immovable = true;
 
-
     this.logo = this.add.sprite(0, 0, 'logo').alignIn(this.camera.bounds, Phaser.TOP_LEFT, -50, -50);
 
     // text
-    const nameLabel = this.add.text(0, 0, 'Experience the life of a student', {
+    this.add.text(0, 0, 'Experience the life of a student', {
       font: '50px Indie Flower', fill: '#ffffff', stroke: '#000000', strokeThickness: 6
     }).alignTo(this.logo, Phaser.RIGHT_CENTER, 10, 0);
-    
-    const startLabel = this.add.text(80, this.game.world.height-80, 'press "w" to start', {
-      font: '25px Arial', fill: '#fffeab'
-    });
-	
-	/*
-	const btnTextStyle = {font: '30px Indie Flower', fill: '#ffffff'};
-      btnTextStyle.stroke = "#000000";
-      btnTextStyle.strokeThickness = 6;
-	  */
 
     // buttons
     let playButton = this.add.existing(
-      new penButton(this.game, 64, 250, 'Play', this.start, this)
+      new penButton(this.game, 64, 250, 'Start game', this.start, this)
     ).alignTo(this.logo, Phaser.BOTTOM_LEFT, 0, 50);
 
     let charSelect = this.add.existing(
       new penButton(this.game, 64, 350, 'Character selection', this.charSelection, this)
     ).alignTo(playButton, Phaser.BOTTOM_CENTER, 0, 40);
 
+    // keyboard
+    const upKey = this.input.keyboard.addKey(Phaser.Keyboard.UP);
+    upKey.onDown.addOnce(this.start, this);
 
       ///////////////////////////
      //// THE TUTORIAL PART ////
     ///////////////////////////
 
-    //this.add.sprite(450, 250, this.game.selectedChar, 'walk1.png');
-    // let jump = this.add.sprite(600, 200, this.game.selectedChar, 'jump.png');
-    // let duck = this.add.sprite(750, 250, this.game.selectedChar, 'duck.png');
-    // jump.scale.x = jump.scale.y = duck.scale.x = duck.scale.y = 0.7;
-
-    // this.jump = this.add.existing(new Player(this.game, 500, 50));
-    // this.jump.scale.x = this.jump.scale.y = 0.7;
-    // this.time.events.loop(2000, this.jump.jump, this);
-
-    // this.duck = this.add.existing(new Player(this.game, 500, 50));
-    // this.duck.scale.x = this.duck.scale.y = 0.7;
-    // this.time.events.loop(1000, this.duck.duck, this);
-    // this.time.events.loop(2000, this.duck.run, this);
     this.obstacles = this.add.group();
     this.obstacles.enableBody = true;
 
-    this.player = this.add.existing(new Player(this.game, 500, 250));
+    this.player = this.add.existing(new Player(this.game, 500, 250, true));
     this.player.scale.x = this.player.scale.y = 0.7;
-    // this.addObstacle();
-    // this.time.events.loop(1500, () => {
-    //   this.jump.jump();
-    //   this.addObstacle();
-    // }, this);
-    this.demonstrateJump();
-
+    
     this.up = this.add.sprite(0, 0, 'up').alignTo(this.player, Phaser.BOTTOM_CENTER, 0, 20);
     this.up.alpha = 0;
     this.down = this.add.sprite(0, 0, 'down').alignTo(this.player, Phaser.BOTTOM_CENTER, 0, 20);
     this.down.alpha = 0;
-    //////////////////////////
 
-    // keyboard
-    const wKey = this.input.keyboard.addKey(Phaser.Keyboard.W);
-    wKey.onDown.addOnce(this.start, this);
-
-    const upKey = this.input.keyboard.addKey(Phaser.Keyboard.UP);
-    upKey.onDown.addOnce(this.start, this);
+    this.demonstrateJump();
   }
 
   start() {
-	const playSound = this.add.audio('startljud');
-	playSound.play();
     this.game.state.start('play');
   }
 
   charSelection() {
-	const playSound = this.add.audio('startljud');
-	playSound.play();
     this.game.state.start('characterSelect');
   }
 
@@ -123,14 +86,14 @@ export default class menuState extends Phaser.State {
     }, this);
   }
 
-  // adds obstacle low(0) or high(1)
+  // adds obstacle low(pos = 0) or high(pos = 1)
   addObstacle(pos) {
     const heights = [420, 305];
     let newObstacle = this.obstacles.create(this.game.width + 50, heights[pos], 'obstacle');
-    newObstacle.scale.x = newObstacle.scale.y = 0.7;
-    newObstacle.body.angularVelocity = -430;
+    newObstacle.scale.setTo(0.7, 0.7);
     newObstacle.anchor.setTo(0.5, 0.5);
-    newObstacle.lifespan = 5000; // TODO se till att detta är ett rimligt värde
+    newObstacle.body.angularVelocity = -430;
+    newObstacle.lifespan = 5000;
     newObstacle.body.velocity.x = - 250;
 
     this.time.events.add(2350, () => {
@@ -142,11 +105,6 @@ export default class menuState extends Phaser.State {
     this.physics.arcade.collide(this.player, this.floor, (player, floor) => {
       if (player.isJumping) player.run();
     });
-
-    this.physics.arcade.collide(this.duck, this.floor);
-
-    // if (this.a.position.x < 480) {
-    //   this.add.tween(this.a).to({ alpha: 0 }, 50, Phaser.Easing.Linear.None, true);
-    // }
   }
+
 }
