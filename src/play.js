@@ -37,7 +37,7 @@ export default class playState extends Phaser.State {
     
     // add obstacles all the time
     this.obstacleTimer = this.time.events.loop(2000, this.addObstacle, this);
-    this.hjertTimer= this.time.events.loop(3000, this.addPowerUp, this);
+    this.hjertTimer= this.time.events.loop(8000, this.addPowerUp, this);
 	
 	//this.game.time.events.loop(this.game.rnd.integerInRange(5000, 12000), this.addPowerUp, this);
 	
