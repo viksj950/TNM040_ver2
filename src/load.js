@@ -32,7 +32,9 @@ export default class loadState extends Phaser.State {
 
     // button textures
     this.game.load.atlasJSONHash('pen', './assets/images/pen_sheet.png', './assets/images/pen_sheet.json');
-    
+    this.game.load.atlasJSONHash('left', './assets/images/left_arrow.png', './assets/images/left_arrow.json');
+    this.game.load.atlasJSONHash('right', './assets/images/right_arrow.png', './assets/images/right_arrow.json');
+
     this.game.load.image('up', './assets/images/up_key.png');
     this.game.load.image('down', './assets/images/down_key.png');
 
