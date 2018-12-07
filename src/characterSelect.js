@@ -1,4 +1,5 @@
 import penButton from "./penButton";
+import toggleButton from "./toggleButton";
 
 export default class characterSelectState extends Phaser.State {
   create() {
@@ -8,6 +9,13 @@ export default class characterSelectState extends Phaser.State {
     this.background.alpha = 0.3;
     this.floor = this.add.tileSprite(0, this.game.height - 128, 1024, 128, 'floor');
     this.floor.alpha = 0.3;
+
+    this.muteButton = this.add.existing(
+      new toggleButton(this.game, () => {
+        this.game.sound.mute = !this.game.sound.mute;
+      }, this, 'soundOn', 'soundOff', 0, 2, 1)
+    );
+    this.muteButton.alignIn(this.camera.view, Phaser.TOP_RIGHT, -24, -24);
 
     // //ritar ut två trianglar, inget nödvändigt
     // var graphics = this.add.graphics(0, 250);
@@ -38,8 +46,7 @@ export default class characterSelectState extends Phaser.State {
     };
 
     // the players
-    this.selectedPlayer = this.add.sprite(0, 0, 'characters', 
-        this.characters[this.game.selectedChar]);
+    this.selectedPlayer = this.add.sprite(0, 0, 'characters', this.characters[this.game.selectedChar]);
     this.selectedPlayer.alignIn(this.camera.bounds, Phaser.CENTER);
 
     this.leftPlayer = this.add.button(0, 0, 'characters', this.changeSelectionLeft, this); //TODO hover stuff

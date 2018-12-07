@@ -1,5 +1,6 @@
 import penButton from "./penButton";
 import Player from "./player";
+import toggleButton from "./toggleButton";
 
 export default class menuState extends Phaser.State {
   create() {
@@ -13,6 +14,13 @@ export default class menuState extends Phaser.State {
     this.floor.body.immovable = true;
 
     this.logo = this.add.sprite(0, 0, 'logo').alignIn(this.camera.bounds, Phaser.TOP_LEFT, -50, -50);
+
+    this.muteButton = this.add.existing(
+      new toggleButton(this.game, () => {
+        this.game.sound.mute = !this.game.sound.mute;
+      }, this, 'soundOn', 'soundOff', 0, 2, 1)
+    );
+    this.muteButton.alignIn(this.camera.view, Phaser.TOP_RIGHT, -24, -24);
 
     // text
     this.add.text(0, 0, 'Experience the life of a student', {

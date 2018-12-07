@@ -1,5 +1,6 @@
 import Player from "./player";
 import penButton from "./penButton";
+import toggleButton from "./toggleButton";
 
 export default class playState extends Phaser.State {
   create() {
@@ -52,17 +53,21 @@ export default class playState extends Phaser.State {
       this.lifeDisp.create(32 + (40 * i), 32, 'powerUp'); //'player'
     }
 
-    // add pause button
-    // TODO 
-    this.pauseButton = this.add.button(
-      0, // ändra nog
-      0,
-      'mute', // !!
-      this.togglePause,
-      this // här kan man fylla i frames för hover osv sen
-    ); // alignTo()
-    // this.pauseButton.anchor.set(0.5);
-    this.pauseButton.alignIn(this.camera.view, Phaser.TOP_RIGHT, -24, -24);
+
+    // add pause and mute button
+    this.pauseButton = this.add.existing(
+      new toggleButton(this.game, this.togglePause, this, 'pause', 'pause', 0, 1, 2)
+    );
+
+    this.muteButton = this.add.existing(
+      new toggleButton(this.game, () => {
+        this.game.sound.mute = !this.game.sound.mute;
+      }, this, 'soundOn', 'soundOff', 0, 2, 1)
+    );
+
+    this.muteButton.alignIn(this.camera.view, Phaser.TOP_RIGHT, -24, -24);
+    this.pauseButton.alignTo(this.muteButton, Phaser.LEFT_CENTER, 24);
+
     
     // add scorestuff
     this.score = 0;
@@ -192,7 +197,7 @@ export default class playState extends Phaser.State {
 
   addObstacle() {
     // const obstaclePosition = [150, 185, 285];
-    const obstaclePosition = [30, 80, 200, 230];
+    const obstaclePosition = [30, 45, 200, 230];
 
     let newObstacle = this.obstacles.create(
       this.game.width + 50,
@@ -233,13 +238,16 @@ export default class playState extends Phaser.State {
     // // this.physics.arcade.isPaused = true;
     // timer.add(1200,() => {this.game.state.start('gameOver')}, this);
     // timer.start();
-	var ajsomfan=this.add.audio('GO');
+	var ajsomfan=this.add.audio('GO'); //TODO ?
     ajsomfan.play();
     
     this.game.state.start('gameOver', true, false, this.score);
   }
 
-
+  menu() {
+    this.game.paused = false;
+    this.game.state.start('menu');
+  }
 
   incrementScore() {
     this.score += 1;
@@ -263,11 +271,8 @@ export default class playState extends Phaser.State {
       let resumeButton = new penButton(this.game, 0, 0, 'Resume', this.togglePause, this);
       resumeButton.alignIn(this.camera.bounds, Phaser.CENTER);
 
-      let muteButton = new penButton(this.game, 0, 0, 'Mute', () => { // TODO visa om på eller av eller ska nogm flytta
-        this.game.sound.mute = !this.game.sound.mute;
-        console.log('mute: ', this.game.sound.mute);
-      }, this);
-      muteButton.alignIn(this.camera.bounds, Phaser.CENTER, 0, 100);
+      let menuButton = new penButton(this.game, 0, 0, 'Menu', this.menu, this);
+      menuButton.alignIn(this.camera.bounds, Phaser.CENTER, 0, 100);
       
       // make pause text
       let pauseText = this.game.add.text( 0, 0, 'Game Paused', {
@@ -275,12 +280,13 @@ export default class playState extends Phaser.State {
       });
       pauseText.alignIn(this.camera.bounds, Phaser.CENTER, 0, -100); // går att lägga på i slutet av förra
 
-      this.pauseButton.bringToTop(); // ...
+      this.pauseButton.bringToTop();
+      this.muteButton.bringToTop();
       
       //add buttons and stuff to pausemenu group
       this.pauseMenu.add(pauseText);
       this.pauseMenu.add(resumeButton);
-      this.pauseMenu.add(muteButton);
+      this.pauseMenu.add(menuButton);
     } else {
       this.pauseMenu.destroy();
       this.overlay.destroy();

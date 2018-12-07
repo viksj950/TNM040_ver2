@@ -24,7 +24,7 @@ export default class Player extends Phaser.Sprite {
     this.animations.add('damage' , ['damage.png'], 2, false)
         .onComplete.add(() => {this.animations.play('run')}, this); //return to run anim when done
     this.animations.add('powerup' , ['powerup.png'], 2, false)
-        .onComplete.add(() => {this.animations.play('run')}, this); // TODO måste fixa
+        .onComplete.add(() => {this.animations.play('run')}, this); // TODO måste fixa kanske
 
     this.duck = this.duck.bind(this);
     this.run = this.run.bind(this);
