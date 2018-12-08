@@ -1,11 +1,12 @@
 import penButton from "./penButton";
+import toggleButton from "./toggleButton";
 
 export default class gameOverState extends Phaser.State {
   init(score) {
     this.score = score;
   }
 
-  create() { // TODO gör likadan som menu nästan?
+  create() {
     let newHighScore = false;
 
     if (this.score > this.game.highScore) { 
@@ -42,6 +43,12 @@ export default class gameOverState extends Phaser.State {
     //   'press "w" or "UP-key" to restart',
     //   {font: '25px Arial', fill: '#ffffff'}
     // );
+    this.muteButton = this.add.existing(
+      new toggleButton(this.game, () => {
+        this.game.sound.mute = !this.game.sound.mute;
+      }, this, 'soundOn', 'soundOff', 0, 2, 1, this.game.sound.mute)
+    );
+    this.muteButton.alignIn(this.camera.view, Phaser.TOP_RIGHT, -24, -24);
     
     // make resume button
     let restartButton = this.add.existing(new penButton(this.game, 0, 0, 'Restart', this.restart, this));

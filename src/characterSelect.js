@@ -13,7 +13,7 @@ export default class characterSelectState extends Phaser.State {
     this.muteButton = this.add.existing(
       new toggleButton(this.game, () => {
         this.game.sound.mute = !this.game.sound.mute;
-      }, this, 'soundOn', 'soundOff', 0, 2, 1)
+      }, this, 'soundOn', 'soundOff', 0, 2, 1, this.game.sound.mute)
     );
     this.muteButton.alignIn(this.camera.view, Phaser.TOP_RIGHT, -24, -24);
 
@@ -64,11 +64,11 @@ export default class characterSelectState extends Phaser.State {
     this.rightPlayer.alignTo(this.selectedPlayer, Phaser.RIGHT_CENTER);
 
     //selection buttons
-    let leftBtn = this.add.button(0, 0, 'left', this.changeSelectionLeft, this, 0, 1, 2);
+    let leftBtn = this.add.button(0, 0, 'left', this.changeSelectionLeft, this, 1, 0, 2);
     leftBtn.scale.setTo(1.5, 1.5);
     leftBtn.alignTo(this.leftPlayer, Phaser.LEFT_CENTER);
 
-    let rightBtn = this.add.button(0, 0, 'right', this.changeSelectionRight, this, 0, 1, 2);
+    let rightBtn = this.add.button(0, 0, 'right', this.changeSelectionRight, this, 1, 0, 2);
     rightBtn.scale.setTo(1.5, 1.5);
     rightBtn.alignTo(this.rightPlayer,   Phaser.RIGHT_CENTER);
 

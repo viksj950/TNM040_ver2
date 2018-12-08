@@ -18,7 +18,7 @@ export default class menuState extends Phaser.State {
     this.muteButton = this.add.existing(
       new toggleButton(this.game, () => {
         this.game.sound.mute = !this.game.sound.mute;
-      }, this, 'soundOn', 'soundOff', 0, 2, 1)
+      }, this, 'soundOn', 'soundOff', 0, 2, 1, this.game.sound.mute)
     );
     this.muteButton.alignIn(this.camera.view, Phaser.TOP_RIGHT, -24, -24);
 

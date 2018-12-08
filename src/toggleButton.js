@@ -1,8 +1,13 @@
 export default class toggleButton extends Phaser.Button {
+  // activated sets inital texture to first(false) or second(true)
   constructor(game, callback, callbackContext, firstTexture, secondTexture,
-      overFrame, outFrame, downFrame) {
+      overFrame, outFrame, downFrame, activated = false) {
 
-    super(game, 0, 0, firstTexture, function(btn) {
+    let texture = '';
+    if (activated) texture = secondTexture;
+    else texture = firstTexture;
+
+    super(game, 0, 0, texture, function(btn) {
 
       if (btn.key === firstTexture) {
         btn.loadTexture(secondTexture);

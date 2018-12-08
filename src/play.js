@@ -59,10 +59,15 @@ export default class playState extends Phaser.State {
       new toggleButton(this.game, this.togglePause, this, 'pause', 'pause', 0, 1, 2)
     );
 
+    // this.muteButton = this.add.existing(
+    //   new toggleButton(this.game, () => {
+    //     this.game.sound.mute = !this.game.sound.mute;
+    //   }, this, 'soundOn', 'soundOff', 0, 2, 1)
+    // );
     this.muteButton = this.add.existing(
       new toggleButton(this.game, () => {
         this.game.sound.mute = !this.game.sound.mute;
-      }, this, 'soundOn', 'soundOff', 0, 2, 1)
+      }, this, 'soundOn', 'soundOff', 0, 2, 1, this.game.sound.mute)
     );
 
     this.muteButton.alignIn(this.camera.view, Phaser.TOP_RIGHT, -24, -24);
@@ -278,7 +283,9 @@ export default class playState extends Phaser.State {
       let pauseText = this.game.add.text( 0, 0, 'Game Paused', {
         font: '70px Indie Flower', fill: '#ffffff', stroke: '#000000', strokeThickness: 6
       });
-      pauseText.alignIn(this.camera.bounds, Phaser.CENTER, 0, -100); // går att lägga på i slutet av förra
+      pauseText.alignIn(this.camera.bounds, Phaser.CENTER, 0, -100);
+
+      // TODO restart btn!
 
       this.pauseButton.bringToTop();
       this.muteButton.bringToTop();
