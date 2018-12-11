@@ -17,23 +17,6 @@ export default class characterSelectState extends Phaser.State {
     );
     this.muteButton.alignIn(this.camera.view, Phaser.TOP_RIGHT, -24, -24);
 
-    // //ritar ut två trianglar, inget nödvändigt
-    // var graphics = this.add.graphics(0, 250);
-
-    // //ritar första triangeln
-    // graphics.beginFill(0xFF3300);
-    // graphics.lineStyle(10, 0xffd900, 1);
-    // graphics.moveTo(100, 75);
-    // graphics.lineTo(200, 50);
-    // graphics.lineTo(200, 100);
-    // graphics.endFill();
-
-    // // ritar andra triangeln
-    // graphics.beginFill(0xFF3300);
-    // graphics.moveTo(900, 75)
-    // graphics.lineTo(800, 50);
-    // graphics.lineTo(800, 100);
-    // graphics.endFill();
 
     this.nCharacters = 5; // number of characters
 
@@ -49,14 +32,16 @@ export default class characterSelectState extends Phaser.State {
     this.selectedPlayer = this.add.sprite(0, 0, 'characters', this.characters[this.game.selectedChar]);
     this.selectedPlayer.alignIn(this.camera.bounds, Phaser.CENTER);
 
-    this.leftPlayer = this.add.button(0, 0, 'characters', this.changeSelectionLeft, this); //TODO hover stuff
+    // this.leftPlayer = this.add.button(0, 0, 'characters', this.changeSelectionLeft, this);
+    this.leftPlayer = this.add.sprite(0, 0, 'characters');
     this.leftPlayer.frame = this.characters[this.game.selectedChar];
     this.leftPlayer.frame = this.checkBounds(this.leftPlayer, -1, this.nCharacters);
     this.leftPlayer.scale.setTo(0.7, 0.7);
     this.leftPlayer.alpha = 0.5;
     this.leftPlayer.alignTo(this.selectedPlayer, Phaser.LEFT_CENTER);
     
-    this.rightPlayer = this.add.button(0, 0, 'characters', this.changeSelectionRight, this);
+    // this.rightPlayer = this.add.button(0, 0, 'characters', this.changeSelectionRight, this);
+    this.rightPlayer = this.add.sprite(0, 0, 'characters');
     this.rightPlayer.frame = this.characters[this.game.selectedChar];
     this.rightPlayer.frame = this.checkBounds(this.rightPlayer, 1, this.nCharacters);
     this.rightPlayer.scale.setTo(0.7, 0.7);
@@ -67,10 +52,12 @@ export default class characterSelectState extends Phaser.State {
     let leftBtn = this.add.button(0, 0, 'left', this.changeSelectionLeft, this, 1, 0, 2);
     leftBtn.scale.setTo(1.5, 1.5);
     leftBtn.alignTo(this.leftPlayer, Phaser.LEFT_CENTER);
+    leftBtn.setDownSound(this.game.add.sound('startljud', 0.7));
 
     let rightBtn = this.add.button(0, 0, 'right', this.changeSelectionRight, this, 1, 0, 2);
     rightBtn.scale.setTo(1.5, 1.5);
     rightBtn.alignTo(this.rightPlayer,   Phaser.RIGHT_CENTER);
+    rightBtn.setDownSound(this.game.add.sound('startljud', 0.7));
 
     // pen buttons
     const btnPadding = -40;

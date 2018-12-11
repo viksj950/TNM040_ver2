@@ -13,11 +13,12 @@ import menuState from './menu';
 import characterSelectState from './characterSelect';
 import playState from './play';
 import gameOverState from './gameOver';
-import penButton from './penButton';
+// import penButton from './penButton';
 
 const config = {
   width: 1024,
   height: 576,
+  parent: "game", // id of DOM container
   render: Phaser.AUTO,
   antialiasing: true,
 }
@@ -27,7 +28,7 @@ class Game extends Phaser.Game {
     super(config);
 
     this.highScore = 0;
-    this.selectedChar = 'arvid'; // the selected character
+    this.selectedChar = 'arvid'; // TODO gör random?
     
     this.state.add('boot', bootState);
     this.state.add('load', loadState);

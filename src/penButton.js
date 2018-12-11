@@ -29,27 +29,4 @@ export default class penButton extends Phaser.Button {
     this.hoverScale = 0.1;
   }
 
-  // DOES NOT WORK PROPERLY
-  // onInputOverHandler(sprite, pointer) {
-  //   this.scale.y -= this.hoverScale;
-  //   if (!this.flipped) {
-  //     this.scale.x -= this.hoverScale;
-  //     this.position.x += this.hoverScale*this.width / 2;
-  //   } else {
-  //     this.scale.x += this.hoverScale;
-  //     //this.position.x -= this.hoverScale*this.width / 2;
-  //   }
-
-  //   super.onInputOverHandler(sprite, pointer);
-  // }
-
-  // onInputOutHandler(sprite, pointer) {
-  //   this.scale.y += this.hoverScale;
-  //   this.scale.x += this.hoverScale;
-  //   this.position.x -= this.hoverScale*this.width /2;
-    
-  //   super.onInputOutHandler(sprite, pointer);
-  // }
-
-
 }

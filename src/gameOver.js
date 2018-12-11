@@ -43,6 +43,7 @@ export default class gameOverState extends Phaser.State {
     //   'press "w" or "UP-key" to restart',
     //   {font: '25px Arial', fill: '#ffffff'}
     // );
+    
     this.muteButton = this.add.existing(
       new toggleButton(this.game, () => {
         this.game.sound.mute = !this.game.sound.mute;

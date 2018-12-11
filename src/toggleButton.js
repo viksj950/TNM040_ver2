@@ -20,6 +20,6 @@ export default class toggleButton extends Phaser.Button {
       
     }, callbackContext, overFrame, outFrame, downFrame);
 
-    // TODO audio?!
+    this.setDownSound(this.game.add.sound('startljud', 0.7));
   }
 }
