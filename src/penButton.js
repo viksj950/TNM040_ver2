@@ -24,7 +24,7 @@ export default class penButton extends Phaser.Button {
 
     }
 
-    this.setDownSound(this.game.add.sound('startljud', 0.7));
+    this.setUpSound(this.game.add.sound('startljud', 0.7));
 
     this.hoverScale = 0.1;
   }

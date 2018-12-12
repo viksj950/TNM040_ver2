@@ -37,8 +37,8 @@ export default class menuState extends Phaser.State {
     ).alignTo(playButton, Phaser.BOTTOM_CENTER, 0, 40);
 
     // keyboard
-    const upKey = this.input.keyboard.addKey(Phaser.Keyboard.UP);
-    upKey.onDown.addOnce(this.start, this);
+    const enterKey = this.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+    enterKey.onDown.addOnce(this.start, this);
 
       ///////////////////////////
      //// THE TUTORIAL PART ////

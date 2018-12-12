@@ -28,6 +28,7 @@ export default class loadState extends Phaser.State {
     this.game.load.atlasJSONHash('left', './assets/images/left_arrow.png', './assets/images/left_arrow.json');
     this.game.load.atlasJSONHash('right', './assets/images/right_arrow.png', './assets/images/right_arrow.json');
     this.game.load.atlasJSONHash('pause', './assets/images/pause_button.png', './assets/images/pause_button.json');
+    this.game.load.atlasJSONHash('play', './assets/images/play_button.png', './assets/images/play_button.json');
     this.game.load.atlasJSONHash('soundOn', './assets/images/sound_on.png', './assets/images/sound_on.json');
     this.game.load.atlasJSONHash('soundOff', './assets/images/sound_off.png', './assets/images/sound_off.json')
 

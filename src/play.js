@@ -1,6 +1,7 @@
 import Player from "./player";
 import penButton from "./penButton";
 import toggleButton from "./toggleButton";
+import prompt from "./prompt";
 
 export default class playState extends Phaser.State {
   create() {
@@ -51,7 +52,7 @@ export default class playState extends Phaser.State {
 
     // add pause and mute button
     this.pauseButton = this.add.existing(
-      new toggleButton(this.game, this.togglePause, this, 'pause', 'pause', 0, 1, 2)
+      new toggleButton(this.game, this.togglePause, this, 'pause', 'play', 0, 1, 2)
     );
 
     this.muteButton = this.add.existing(
@@ -157,11 +158,11 @@ export default class playState extends Phaser.State {
      * saker som fungerar typ:
      */
 
-    this.difficultyThing *= 0.85;
+    this.difficultyThing *= 0.80;
     this.obstacleTimer.delay = this.difficultyThing*350 + 700;
     
     // this.obstacleTimer.delay = 700;
-    // console.log(this.obstacleTimer.delay);
+    console.log(this.obstacleTimer.delay);
   }
 
   //debug stuff
@@ -177,6 +178,11 @@ export default class playState extends Phaser.State {
   menu() {
     this.game.paused = false; // needed to work
     this.game.state.start('menu');
+  }
+
+  restart() {
+    this.game.paused = false; // needed to work
+    this.game.state.start('play');
   }
 
   addObstacle() {
@@ -238,18 +244,25 @@ export default class playState extends Phaser.State {
 
       // make buttons
       let resumeButton = new penButton(this.game, 0, 0, 'Resume', this.togglePause, this);
-      resumeButton.alignIn(this.camera.bounds, Phaser.CENTER);
+      resumeButton.alignIn(this.camera.bounds, Phaser.CENTER, 0, -50);
 
-      let menuButton = new penButton(this.game, 0, 0, 'Menu', this.menu, this);
-      menuButton.alignIn(this.camera.bounds, Phaser.CENTER, 0, 100);
+      let restartButton = new penButton(this.game, 0, 0, 'restart', () => {
+        this.add.existing(new prompt(this.game, 'Are you sure you want to restart?', () => this.restart()));
+      }, this);
+      restartButton.alignIn(this.camera.bounds, Phaser.CENTER, 0, 50);
+      
+      let menuButton = new penButton(this.game, 0, 0, 'Menu', () => {
+        this.add.existing(new prompt(this.game, 'Are you sure you want to exit?', () => this.menu()));
+      }, this);
+      menuButton.alignIn(this.camera.bounds, Phaser.CENTER, 0, 150);
+
       
       // make pause text
       let pauseText = this.game.add.text( 0, 0, 'Game Paused', {
         font: '70px Indie Flower', fill: '#ffffff', stroke: '#000000', strokeThickness: 6
       });
-      pauseText.alignIn(this.camera.bounds, Phaser.CENTER, 0, -100);
+      pauseText.alignIn(this.camera.bounds, Phaser.CENTER, 0, -150);
 
-      // TODO restart btn!
 
       this.pauseButton.bringToTop();
       this.muteButton.bringToTop();
@@ -257,6 +270,7 @@ export default class playState extends Phaser.State {
       //add buttons and stuff to pausemenu group
       this.pauseMenu.add(pauseText);
       this.pauseMenu.add(resumeButton);
+      this.pauseMenu.add(restartButton);
       this.pauseMenu.add(menuButton);
     } else {
       this.pauseMenu.destroy();

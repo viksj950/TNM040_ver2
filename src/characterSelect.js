@@ -32,16 +32,18 @@ export default class characterSelectState extends Phaser.State {
     this.selectedPlayer = this.add.sprite(0, 0, 'characters', this.characters[this.game.selectedChar]);
     this.selectedPlayer.alignIn(this.camera.bounds, Phaser.CENTER);
 
-    // this.leftPlayer = this.add.button(0, 0, 'characters', this.changeSelectionLeft, this);
-    this.leftPlayer = this.add.sprite(0, 0, 'characters');
+    this.leftPlayer = this.add.button(0, 0, 'characters', this.changeSelectionLeft, this);
+    this.leftPlayer.onInputOver.add(() => { this.leftPlayer.alpha = 0.75; });
+    this.leftPlayer.onInputOut.add(() => { this.leftPlayer.alpha = 0.5; });
     this.leftPlayer.frame = this.characters[this.game.selectedChar];
     this.leftPlayer.frame = this.checkBounds(this.leftPlayer, -1, this.nCharacters);
     this.leftPlayer.scale.setTo(0.7, 0.7);
     this.leftPlayer.alpha = 0.5;
     this.leftPlayer.alignTo(this.selectedPlayer, Phaser.LEFT_CENTER);
     
-    // this.rightPlayer = this.add.button(0, 0, 'characters', this.changeSelectionRight, this);
-    this.rightPlayer = this.add.sprite(0, 0, 'characters');
+    this.rightPlayer = this.add.button(0, 0, 'characters', this.changeSelectionRight, this);
+    this.rightPlayer.onInputOver.add(() => { this.rightPlayer.alpha = 0.75; });
+    this.rightPlayer.onInputOut.add(() => { this.rightPlayer.alpha = 0.5; });
     this.rightPlayer.frame = this.characters[this.game.selectedChar];
     this.rightPlayer.frame = this.checkBounds(this.rightPlayer, 1, this.nCharacters);
     this.rightPlayer.scale.setTo(0.7, 0.7);
@@ -74,11 +76,8 @@ export default class characterSelectState extends Phaser.State {
     });
 
     // keyboard
-    const wKey = this.input.keyboard.addKey(Phaser.Keyboard.W);
-    wKey.onDown.addOnce(this.start, this);
-
-    const upKey = this.input.keyboard.addKey(Phaser.Keyboard.UP);
-    upKey.onDown.addOnce(this.start, this);
+    const enterKey = this.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+    enterKey.onDown.addOnce(this.start, this);
 
     const leftKey = this.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     leftKey.onDown.add(this.changeSelectionLeft, this);
