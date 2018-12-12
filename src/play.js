@@ -162,7 +162,7 @@ export default class playState extends Phaser.State {
     this.obstacleTimer.delay = this.difficultyThing*350 + 700;
     
     // this.obstacleTimer.delay = 700;
-    console.log(this.obstacleTimer.delay);
+    // console.log(this.obstacleTimer.delay);
   }
 
   //debug stuff

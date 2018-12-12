@@ -39,14 +39,11 @@ class Game extends Phaser.Game {
 
     if (window.localStorage) {
       if (!localStorage.getItem('highScore')) {
-        localStorage.setItem('highScore', '0'); //jkjklj
+        localStorage.setItem('highScore', '0');
       } else {
-        console.log(localStorage.getItem('highScore'));
-        
+        // console.log(localStorage.getItem('highScore'));
         this.highScore = parseInt(localStorage.getItem('highScore'));
       }
-      // do stuff with localStorage
-      // no need to use window anymore
     }
     
     this.state.start('boot');

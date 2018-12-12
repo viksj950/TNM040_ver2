@@ -4,7 +4,6 @@ import toggleButton from "./toggleButton";
 
 export default class menuState extends Phaser.State {
   create() {
-    // TODO COOKIES HIGSCORE??
     //add background
     this.game.stage.backgroundColor = "#000000";
     this.background = this.add.tileSprite(0, 0, this.game.width, this.game.height - 128, 'gameBackground');
