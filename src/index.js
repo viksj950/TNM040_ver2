@@ -36,6 +36,18 @@ class Game extends Phaser.Game {
     this.state.add('characterSelect', characterSelectState);
     this.state.add('play', playState);
     this.state.add('gameOver', gameOverState);
+
+    if (window.localStorage) {
+      if (!localStorage.getItem('highScore')) {
+        localStorage.setItem('highScore', '0'); //jkjklj
+      } else {
+        console.log(localStorage.getItem('highScore'));
+        
+        this.highScore = parseInt(localStorage.getItem('highScore'));
+      }
+      // do stuff with localStorage
+      // no need to use window anymore
+    }
     
     this.state.start('boot');
   }

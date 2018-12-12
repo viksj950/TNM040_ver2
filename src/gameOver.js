@@ -12,6 +12,11 @@ export default class gameOverState extends Phaser.State {
     if (this.score > this.game.highScore) { 
       newHighScore = true;
       this.game.highScore = this.score;
+
+      // save highscore to next session if localStorage is supported
+      if (window.localStorage) {
+        localStorage.setItem('highScore', this.game.highScore.toString());
+      }
     }
     //set background
     this.game.stage.backgroundColor = "#000000";

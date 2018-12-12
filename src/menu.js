@@ -4,6 +4,7 @@ import toggleButton from "./toggleButton";
 
 export default class menuState extends Phaser.State {
   create() {
+    // TODO COOKIES HIGSCORE??
     //add background
     this.game.stage.backgroundColor = "#000000";
     this.background = this.add.tileSprite(0, 0, this.game.width, this.game.height - 128, 'gameBackground');
@@ -23,9 +24,13 @@ export default class menuState extends Phaser.State {
     this.muteButton.alignIn(this.camera.view, Phaser.TOP_RIGHT, -24, -24);
 
     // text
-    this.add.text(0, 0, 'Experience the life of a student', {
+    let textText = this.add.text(0, 0, 'Experience the life of a student', {
       font: '50px Indie Flower', fill: '#ffffff', stroke: '#000000', strokeThickness: 6
     }).alignTo(this.logo, Phaser.RIGHT_CENTER, 10, 0);
+
+    this.add.text(0, 0, `Current High Score: ${this.game.highScore}`, {
+      font: '25px Indie Flower', fill: '#ffffff', stroke: '#000000', strokeThickness: 6
+    }).alignTo(textText, Phaser.BOTTOM_LEFT, -15);
 
     // buttons
     let playButton = this.add.existing(
