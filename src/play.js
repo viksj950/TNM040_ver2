@@ -92,10 +92,16 @@ export default class playState extends Phaser.State {
     this.upKey.onHoldCallback = this.player.jump;
 
     this.pKey = this.keyboard.addKey(Phaser.KeyCode.P);
-    this.pKey.onDown.add(this.togglePause, this);
+    this.pKey.onDown.add(() => {
+      this.togglePause();
+      this.pauseButton.changeState();
+    }, this);
 
     this.escKey = this.keyboard.addKey(Phaser.KeyCode.ESC);
-    this.escKey.onDown.add(this.togglePause, this);
+    this.escKey.onDown.add(() => {
+      this.togglePause();
+      this.pauseButton.changeState();
+    }, this);
   }
 
   update() {
