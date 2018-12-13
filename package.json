@@ -7,12 +7,13 @@
   },
   "devDependencies": {
     "expose-loader": "^0.7.3",
-    "webpack": "^3.0.0",
-    "webpack-dev-server": "^2.5.0"
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
   },
   "scripts": {
-    "start": "webpack-dev-server",
-    "build": "webpack"
+    "start": "webpack-dev-server --mode none",
+    "build": "webpack --mode production"
   },
   "license": "ISC"
 }

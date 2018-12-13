@@ -12,6 +12,14 @@ module.exports = {
     filename: 'bundle.js',
     path: path.join(__dirname, 'public', 'assets', 'scripts')
   },
+  // optimization: {
+  //   splitChunks: {
+  //     chunks: 'all'
+  //   }
+  // },
+  performance: {
+    maxAssetSize: 1000000
+  },
 
   /**
    * Minimal development setup.
@@ -22,7 +30,7 @@ module.exports = {
   devServer: {
     publicPath: '/assets/scripts/',
     contentBase: path.join(__dirname, 'public'),
-    port: 3000
+    port: 3000,
   }
 
 };

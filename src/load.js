@@ -49,6 +49,7 @@ export default class loadState extends Phaser.State {
   }
 
   create() {
+    this.game.menuMusic = this.game.sound.add('menuMusic', 1, true);
     this.loadingBar.cropEnabled = false;
     this.game.state.start('menu');
   }

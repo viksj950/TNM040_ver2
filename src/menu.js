@@ -14,7 +14,9 @@ export default class menuState extends Phaser.State {
     this.floor.body.immovable = true;
 
     //music
-    this.game.menuMusic = this.game.sound.add('menuMusic', 1, true).play();
+    if (!this.game.menuMusic.isPlaying) {
+      this.game.menuMusic.play();
+    }
 
 
     this.logo = this.add.sprite(0, 0, 'logo').alignIn(this.camera.bounds, Phaser.TOP_LEFT, -50, -50);
