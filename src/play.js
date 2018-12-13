@@ -13,6 +13,10 @@ export default class playState extends Phaser.State {
     this.backgroundSpeed = 250;
     this.difficultyThing = 1;
 
+    // music
+    this.game.menuMusic.stop();
+    this.gameMusic = this.sound.add('gameMusic', 0.5, true).play();
+
     
     // add background
     this.background = this.add.tileSprite(0, 0, this.game.width, this.game.height - 128, 'gameBackground');
@@ -66,6 +70,9 @@ export default class playState extends Phaser.State {
 
     
     // add scorestuff
+    // this.highScoreLabel = this.add.text(50,50, `High Score: ${this.game.highScore}`, {
+    //   font: '20px Indie Flower', fill: '#000000', align: 'left'
+    // }).alignTo(this.camera.world.bounds, Phaser.TOP_CENTER, -200, -65);
     this.score = 0;
     this.scoreLabel = this.add.text(50, 50, 'score:\n' + this.score, {
       font: '25px Indie Flower', fill: '#000000', align: 'center'
@@ -117,7 +124,7 @@ export default class playState extends Phaser.State {
         
         this.updateLifeDisp();
           
-        var pickup=this.add.audio('power');
+        var pickup=this.add.audio('power', 0.5);
         pickup.play();
       }
       else
@@ -177,14 +184,26 @@ export default class playState extends Phaser.State {
   
   menu() {
     this.game.paused = false; // needed to work
+    this.gameMusic.stop();
     this.game.state.start('menu');
   }
 
   restart() {
     this.game.paused = false; // needed to work
+    this.gameMusic.stop();
     this.game.state.start('play');
   }
-
+  
+  gameOver() {    
+    // // timergrejen måste förhindra hopp och grejor
+    // // wait a little and then go to gameOver
+    // let timer = this.game.time.create(true);
+    // this.game.paused = true;
+    // timer.add(1200,() => {this.game.state.start('gameOver')}, this);
+    // timer.start();
+    this.gameMusic.stop();
+    this.game.state.start('gameOver', true, false, this.score);
+  }
   addObstacle() {
     const obstaclePosition = [30, 45, 200, 230];
 
@@ -212,16 +231,6 @@ export default class playState extends Phaser.State {
     this.add.tween(newPowerUp).to( { angle: 10 }, 500, Phaser.Easing.Sinusoidal.Out, true, 500, 500, true);
   }
 
-  gameOver() {    
-    // // timergrejen måste förhindra hopp och grejor
-    // // wait a little and then go to gameOver
-    // let timer = this.game.time.create(true);
-    // this.game.paused = true;
-    // timer.add(1200,() => {this.game.state.start('gameOver')}, this);
-    // timer.start();
-    
-    this.game.state.start('gameOver', true, false, this.score);
-  }
 
 
   incrementScore() {

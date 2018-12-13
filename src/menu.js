@@ -13,6 +13,10 @@ export default class menuState extends Phaser.State {
     this.game.physics.enable(this.floor);
     this.floor.body.immovable = true;
 
+    //music
+    this.game.menuMusic = this.game.sound.add('menuMusic', 1, true).play();
+
+
     this.logo = this.add.sprite(0, 0, 'logo').alignIn(this.camera.bounds, Phaser.TOP_LEFT, -50, -50);
 
     this.muteButton = this.add.existing(

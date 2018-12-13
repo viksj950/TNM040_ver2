@@ -84,7 +84,7 @@ export default class Player extends Phaser.Sprite {
 
     this.alive = false;
 
-    console.log('player killed');
+    // console.log('player killed');
     this.animations.play('damage', 1, true);
 
     if (this.events) {

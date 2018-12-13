@@ -3,7 +3,6 @@ export default class loadState extends Phaser.State {
     this.loadingBar = this.add.sprite(112, 300, 'loadingBar');
     this.load.setPreloadSprite(this.loadingBar);
     
-    // this.game.load.image('mute', './assets/images/Mute_1.png');
     this.game.load.image('logo', './assets/images/Unilife.png');
 
     this.game.load.image('obstacle', './assets/images/tenta_red.png');
@@ -40,7 +39,13 @@ export default class loadState extends Phaser.State {
     this.game.load.audio('hurtljud','./assets/sound/hurt.wav');
     this.game.load.audio('hoppljud','./assets/sound/hopp.wav')
     this.game.load.audio('power','./assets/sound/Powerup.wav');
+    this.game.load.audio('gameOver', './assets/sound/gameover.wav');
+    this.game.load.audio('highScore', './assets/sound/highscore.wav');
     // this.game.load.audio('dontHeal','./assets/sound/health_pickup_denied.wav');
+
+    //music
+    this.game.load.audio('gameMusic','./assets/sound/game_music.wav');
+    this.game.load.audio('menuMusic','./assets/sound/menu_music.mp3');
   }
 
   create() {

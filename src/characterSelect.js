@@ -40,6 +40,7 @@ export default class characterSelectState extends Phaser.State {
     this.leftPlayer.scale.setTo(0.7, 0.7);
     this.leftPlayer.alpha = 0.5;
     this.leftPlayer.alignTo(this.selectedPlayer, Phaser.LEFT_CENTER);
+    this.leftPlayer.setDownSound(this.game.add.sound('startljud'));
     
     this.rightPlayer = this.add.button(0, 0, 'characters', this.changeSelectionRight, this);
     this.rightPlayer.onInputOver.add(() => { this.rightPlayer.alpha = 0.75; });
@@ -49,17 +50,18 @@ export default class characterSelectState extends Phaser.State {
     this.rightPlayer.scale.setTo(0.7, 0.7);
     this.rightPlayer.alpha = 0.5;
     this.rightPlayer.alignTo(this.selectedPlayer, Phaser.RIGHT_CENTER);
+    this.rightPlayer.setDownSound(this.game.add.sound('startljud'));
 
     //selection buttons
     let leftBtn = this.add.button(0, 0, 'left', this.changeSelectionLeft, this, 1, 0, 2);
     leftBtn.scale.setTo(1.5, 1.5);
     leftBtn.alignTo(this.leftPlayer, Phaser.LEFT_CENTER);
-    leftBtn.setDownSound(this.game.add.sound('startljud', 0.7));
+    leftBtn.setDownSound(this.game.add.sound('startljud'));
 
     let rightBtn = this.add.button(0, 0, 'right', this.changeSelectionRight, this, 1, 0, 2);
     rightBtn.scale.setTo(1.5, 1.5);
     rightBtn.alignTo(this.rightPlayer,   Phaser.RIGHT_CENTER);
-    rightBtn.setDownSound(this.game.add.sound('startljud', 0.7));
+    rightBtn.setDownSound(this.game.add.sound('startljud'));
 
     // pen buttons
     const btnPadding = -40;
