@@ -1,0 +1,115 @@
+{
+	"frames": {
+		"anton.png": {
+			"frame": {
+				"x": 1,
+				"y": 1,
+				"w": 250,
+				"h": 400
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 250,
+				"h": 400
+			},
+			"sourceSize": {
+				"w": 250,
+				"h": 400
+			}
+		},
+		"arvid.png": {
+			"frame": {
+				"x": 253,
+				"y": 1,
+				"w": 250,
+				"h": 400
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 250,
+				"h": 400
+			},
+			"sourceSize": {
+				"w": 250,
+				"h": 400
+			}
+		},
+		"linnea.png": {
+			"frame": {
+				"x": 505,
+				"y": 1,
+				"w": 250,
+				"h": 400
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 250,
+				"h": 400
+			},
+			"sourceSize": {
+				"w": 250,
+				"h": 400
+			}
+		},
+		"viktor.png": {
+			"frame": {
+				"x": 1,
+				"y": 403,
+				"w": 250,
+				"h": 400
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 250,
+				"h": 400
+			},
+			"sourceSize": {
+				"w": 250,
+				"h": 400
+			}
+		},
+		"william.png": {
+			"frame": {
+				"x": 253,
+				"y": 403,
+				"w": 250,
+				"h": 400
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 250,
+				"h": 400
+			},
+			"sourceSize": {
+				"w": 250,
+				"h": 400
+			}
+		}
+	},
+	"meta": {
+		"app": "http://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "spritesheet.png",
+		"format": "RGBA8888",
+		"size": {
+			"w": 756,
+			"h": 804
+		},
+		"scale": "1"
+	}
+}

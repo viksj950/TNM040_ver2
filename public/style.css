@@ -1,0 +1,29 @@
+canvas {
+	padding-left: 0;
+	padding-right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	background-repeat: repeat;
+
+	-webkit-box-shadow: 10px 11px 28px -8px rgba(0,0,0,0.75);
+	-moz-box-shadow: 10px 11px 28px -8px rgba(0,0,0,0.75);
+	box-shadow: 10px 11px 28px -8px rgba(0,0,0,0.75);
+
+	/* border: 10px solid white; */
+}
+
+body{
+	/* background from: https://www.toptal.com/designers/subtlepatterns/tileable-wood/ */
+	background-image: url("tileable_wood_texture.png");
+	background-color: #cccccc;
+	background-repeat: repeat;
+}
+
+footer {
+	padding-top: 20px;
+	font-size: 18px;
+	color: #333;
+	text-align: center;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
