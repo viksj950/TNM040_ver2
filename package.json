@@ -8,7 +8,7 @@
   "devDependencies": {
     "expose-loader": "^0.7.3",
     "webpack": "^4.27.1",
-    "webpack-cli": "^3.1.2",
+    "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.1.10"
   },
   "scripts": {
